@@ -481,6 +481,11 @@
   "resolved" "https://registry.npmjs.org/abbrev/-/abbrev-1.1.1.tgz"
   "version" "1.1.1"
 
+"about-window@^1.15.2":
+  "integrity" "sha512-31mDAnLUfKm4uShfMzeEoS6a3nEto2tUt4zZn7qyAKedaTV4p0dGiW1n+YG8vtRh78mZiewghWJmoxDY+lHyYg=="
+  "resolved" "https://registry.npmjs.org/about-window/-/about-window-1.15.2.tgz"
+  "version" "1.15.2"
+
 "agent-base@^6.0.2", "agent-base@6":
   "integrity" "sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ=="
   "resolved" "https://registry.npmjs.org/agent-base/-/agent-base-6.0.2.tgz"

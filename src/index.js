@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Menu, dialog } = require('electron');
 const storage = require('electron-json-storage');
+const openAboutWindow = require('about-window').default;
 const path = require('path');
 const config = require('./config.json');
 
@@ -22,18 +23,17 @@ const createWindow = () => {
 
 const openFolder = {
   label: 'Open Folder',
-  subMenu: [{
-    label: 'Folder',
-    id: 'folder',
-    click: function () {
-      openFolderDialog();
-    }
-  }]
+  click: openFolderDialog
 };
+
+const information = {
+  label: 'Information',
+  click: aboutApplication
+}
 
 app.on('ready', () =>{
   createWindow();
-  SetMenu(openFolder);
+  SetMenu(openFolder,information);
 });
 
 app.on('window-all-closed', () => {
@@ -44,8 +44,8 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
 
-function SetMenu(openFolder) {
-  const menu = Menu.buildFromTemplate([openFolder]);
+function SetMenu(openFolder,information) {
+  const menu = Menu.buildFromTemplate([openFolder,information]);
   Menu.setApplicationMenu(menu);
 }
 
@@ -67,3 +67,13 @@ function openFolderDialog() {
   );
 }
 
+function aboutApplication() {
+  openAboutWindow({
+    icon_path: path.join(__dirname, '../Electune.png'),
+    product_name: 'Electunes',
+    homepage: 'https://github.com/Nich87/Electron-MusicPlayer',
+    copyright: 'By Nich87',
+    description: 'Simple Electron Music Player',
+    license: 'MIT',
+  });
+}
