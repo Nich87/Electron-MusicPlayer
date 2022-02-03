@@ -1,6 +1,6 @@
 {
   "name": "electron-musicplayer",
-  "productName": "electron-musicplayer",
+  "productName": "Electunes",
   "version": "1.0.0",
   "description": "Simple MusicPlayer",
   "main": "src/index.js",
@@ -18,7 +18,9 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "Electunes.ico"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",

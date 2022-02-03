@@ -1,29 +1,51 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="css/index.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
 <body>
-  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">play_arrow</i></a>
+  <div id="container">
+  <div class="progress">
+    <div class="determinate" style="width: 50%"></div>
+  </div>
+
+  <table id="Music_list">
+    <thead>
+      <th>曲名</th>
+      <th>アーティスト</th>
+      <th>長さ</th>
+    </thead>
+  </table>
+
+  <div class="Controler">
+  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">replay_10</i></a>
+  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">skip_previous</i></a>
+  <a class="btn-floating btn-small waves-effect waves-light red" id="btn_play"><i class="material-icons">play_arrow</i></a>
+  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">skip_next</i></a>
+  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">forward_10</i></a>
+  </div>
+
+  <div class="sub_Controler">
+  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">favorite_border</i></a>
+  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">repeat</i></a>
+  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">shuffle</i></a>
+  </div>
+  </div>
+  <!--
   <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">pause</i></a>
-  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">forward_10</i></a>
-  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">replay_10</i></a>
-  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">pause</i></a>
-  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">repeat</i></a>
   <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">repeat_one</i></a>
-  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">shuffle</i></a>
-  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">skip_next</i></a>
-  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">skip_previous</i></a>
   <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">folder</i></a>
   <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">brightness_4</i></a>
   <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">favorite</i></a>
-  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">favorite_border</i></a>
-
+  -->
   <!-- Load Scripts -->
   <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/Moniter.js"></script>
 </body>
 
 </html>

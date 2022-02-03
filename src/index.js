@@ -2,11 +2,12 @@ const { app, BrowserWindow, Menu, dialog } = require('electron');
 const storage = require('electron-json-storage');
 const openAboutWindow = require('about-window').default;
 const path = require('path');
+const fs = require('fs');
 const config = require('./config.json');
+const encoder = new TextEncoder();
 
 if (require('electron-squirrel-startup')) app.quit();
-
-let mainWindow;
+let mainWindow,filelist = [];
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -58,7 +59,7 @@ function openFolderDialog() {
         storage.set('path', { path: filePath }, function (error) {
           if (error) throw error;
         });
-        console.log(filePath);
+        scanDir(String(filePath));
       }
     },
     (error) => {
@@ -67,9 +68,37 @@ function openFolderDialog() {
   );
 }
 
+function scanDir(filePath) {
+  if(!filePath || filePath[0] === 'undefined') return;
+  console.log(walkSync(filePath, filelist));
+}
+
+const walkSync = function (dir, filelist) {
+  files = fs.readdirSync(dir);
+  filelist = filelist || [];
+  files.forEach(function (file) {
+    if (fs.statSync(path.join(dir, file)).isDirectory()) {
+      filelist = walkSync(path.join(dir, file), filelist);
+    } else {
+      if (file.endsWith('.mp3') ||
+      file.endsWith('.wav')||
+      file.endsWith('.flac')||
+      file.endsWith('.flac')||
+      file.endsWith('.ogg')||
+      file.endsWith('.aac')||
+      file.endsWith('.m4a')||
+      file.endsWith('.wma')||
+      file.endsWith('.alac')||
+      file.endsWith('.webm')
+      ) filelist.push(path.join(dir, file));
+    }
+  });
+  return filelist;
+};
+
 function aboutApplication() {
   openAboutWindow({
-    icon_path: path.join(__dirname, '../Electune.png'),
+    icon_path: path.join(__dirname, '../Electunes.png'),
     product_name: 'Electunes',
     homepage: 'https://github.com/Nich87/Electron-MusicPlayer',
     copyright: 'By Nich87',
