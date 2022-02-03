@@ -59,7 +59,7 @@ function openFolderDialog() {
         storage.set('path', { path: filePath }, function (error) {
           if (error) throw error;
         });
-        scanDir(String(filePath));
+        scanDir(filePath);
       }
     },
     (error) => {
@@ -82,7 +82,6 @@ const walkSync = function (dir, filelist) {
     } else {
       if (file.endsWith('.mp3') ||
       file.endsWith('.wav')||
-      file.endsWith('.flac')||
       file.endsWith('.flac')||
       file.endsWith('.ogg')||
       file.endsWith('.aac')||
