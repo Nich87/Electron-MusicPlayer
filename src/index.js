@@ -1,13 +1,13 @@
-const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
-app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
-const storage = require('electron-json-storage');
+/* ---------------------module import-------------------------- */
+const { app, BrowserWindow, Menu, dialog } = require('electron');
 const openAboutWindow = require('about-window').default;
-const path = require('path');
-const fs = require('fs');
+if (require('electron-squirrel-startup')) app.quit();
 const config = require('./config.json');
 const mm = require('musicmetadata');
+const path = require('path');
+const fs = require('fs');
+/* ---------------------module import-------------------------- */
 
-if (require('electron-squirrel-startup')) app.quit();
 let mainWindow,filelist = [];
 
 const createWindow = () => {
@@ -58,12 +58,7 @@ function openFolderDialog() {
   dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }).then(
     (result) => {
       const filePath = result.filePaths[0];
-      if (filePath) {
-        storage.set('path', { path: filePath }, function (error) {
-          if (error) throw error;
-        });
-        scanDir(filePath);
-      }
+      if (filePath) scanDir(filePath);
     },
     (error) => {
       throw error;
@@ -112,7 +107,6 @@ function aboutApplication() {
 
 
 const play = () => {
-  storage.set('./config.json', data);
   let json = {...filelist};
   json = Object.assign({},filelist);
   json = filelist.reduce((json, value, key) =>{json[key] = value; return json;},{});

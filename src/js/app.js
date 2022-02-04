@@ -16,7 +16,6 @@ function Maker(list) {
         console.debug('end');
         player.unload();
         list.shift();
-        //if(list.length > 0 && !plloop) return;
         Maker(list);
     });
 }

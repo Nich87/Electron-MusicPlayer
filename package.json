@@ -47,7 +47,6 @@
   },
   "dependencies": {
     "about-window": "^1.15.2",
-    "electron-json-storage": "^4.5.0",
     "electron-squirrel-startup": "^1.0.0",
     "howler": "^2.2.3",
     "musicmetadata": "^2.0.5"

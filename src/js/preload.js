@@ -1,6 +1,8 @@
-const { Howl } = require('howler');
 const { ipcRenderer } = require('electron');
-const storage = require('electron-json-storage');
-global.Howl = Howl;
+const { Howl } = require('howler');
+const m = require('musicmetadata');
+
+
 global.ipcRenderer = ipcRenderer;
-global.storage = storage;
+global.Howl = Howl;
+global.mm = m;
