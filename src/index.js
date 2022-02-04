@@ -1,20 +1,23 @@
-const { app, BrowserWindow, Menu, dialog } = require('electron');
+const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 const storage = require('electron-json-storage');
 const openAboutWindow = require('about-window').default;
 const path = require('path');
 const fs = require('fs');
 const config = require('./config.json');
-const encoder = new TextEncoder();
+const mm = require('musicmetadata');
 
 if (require('electron-squirrel-startup')) app.quit();
 let mainWindow,filelist = [];
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: 600,
     height: 600,
     webPreferences: {
       nodeIntegration: true,
+      preload: path.join(__dirname, './js/preload.js'),
+      contextIsolation: false
     },
   });
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
@@ -70,11 +73,12 @@ function openFolderDialog() {
 
 function scanDir(filePath) {
   if(!filePath || filePath[0] === 'undefined') return;
-  console.log(walkSync(filePath, filelist));
+  walkSync(filePath, filelist);
+  play();
 }
 
 const walkSync = function (dir, filelist) {
-  files = fs.readdirSync(dir);
+  files = fs.readdirSync(dir,'utf8');
   filelist = filelist || [];
   files.forEach(function (file) {
     if (fs.statSync(path.join(dir, file)).isDirectory()) {
@@ -104,4 +108,20 @@ function aboutApplication() {
     description: 'Simple Electron Music Player',
     license: 'MIT',
   });
+}
+
+
+const play = () => {
+  const data = {
+    'play': false,
+    'loop': false,
+    'shuffle': false,
+    'volume': 0.5,
+    'current': 0,
+    'duration': 0,
+    'songs': filelist,
+    'queue': filelist.length,
+  };
+  storage.set('./config.json', data);
+  mainWindow.webContents.send('start');
 }
