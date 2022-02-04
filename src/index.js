@@ -112,16 +112,10 @@ function aboutApplication() {
 
 
 const play = () => {
-  const data = {
-    'play': false,
-    'loop': false,
-    'shuffle': false,
-    'volume': 0.5,
-    'current': 0,
-    'duration': 0,
-    'songs': filelist,
-    'queue': filelist.length,
-  };
   storage.set('./config.json', data);
-  mainWindow.webContents.send('start');
+  let json = {...filelist};
+  json = Object.assign({},filelist);
+  json = filelist.reduce((json, value, key) =>{json[key] = value; return json;},{});
+  console.log(json);
+  mainWindow.webContents.send('start',json);
 }

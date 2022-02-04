@@ -1,9 +1,12 @@
 let player;
-let list = [];
 
-ipcRenderer.on('start', () => Maker());
+ipcRenderer.on('start', (args,filelist) => {
+    filelist = Object.values(filelist);
+    console.log(filelist)
+    Maker(filelist);
+});
 
-function Maker() {
+function Maker(list) {
     player = new Howl({
         src: list[0],
         loop: false
@@ -13,7 +16,7 @@ function Maker() {
         console.debug('end');
         player.unload();
         list.shift();
-        //if(list.length > 0) return;
-        Maker();
+        //if(list.length > 0 && !plloop) return;
+        Maker(list);
     });
 }
