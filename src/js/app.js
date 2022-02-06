@@ -1,4 +1,5 @@
 let player;
+M.AutoInit();
 
 ipcRenderer.on('start', (args,filelist) => {
     filelist = Object.values(filelist);
@@ -9,7 +10,7 @@ ipcRenderer.on('start', (args,filelist) => {
 function Maker(list) {
     player = new Howl({
         src: list[0],
-        loop: false
+        loop: true
     });
     player.on('load', () => player.play());
     player.on('end', () => {
@@ -18,4 +19,9 @@ function Maker(list) {
         list.shift();
         Maker(list);
     });
+    player.on('play', () => play());
+}
+
+const play = () => {
+
 }

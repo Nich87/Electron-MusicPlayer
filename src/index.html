@@ -11,37 +11,34 @@
 
 <body>
   <div id="container">
-  <div class="progress">
-    <div class="determinate" style="width: 50%"></div>
-  </div>
+    <div class="progress"> <input type="range" id="playerProgress" min="0" max="0"> </div>
+    <table id="Music_list">
+      <thead>
+        <th>曲名</th>
+        <th>アーティスト</th>
+        <th>長さ</th>
+      </thead>
+    </table>
+    <div class="Controler">
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">replay_10</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">skip_previous</i></a>
+      <a class="btn-floating btn-small waves-effect waves-light red" id="btn_play"><i class="material-icons">play_arrow</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">skip_next</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">forward_10</i></a>
+    </div>
 
-  <table id="Music_list">
-    <thead>
-      <th>曲名</th>
-      <th>アーティスト</th>
-      <th>長さ</th>
-    </thead>
-  </table>
-
-  <div class="Controler">
-  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">replay_10</i></a>
-  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">skip_previous</i></a>
-  <a class="btn-floating btn-small waves-effect waves-light red" id="btn_play"><i class="material-icons">play_arrow</i></a>
-  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">skip_next</i></a>
-  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">forward_10</i></a>
-  </div>
-
-  <div class="sub_Controler">
-  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">favorite_border</i></a>
-  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">repeat</i></a>
-  <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">shuffle</i></a>
-  </div>
+    <div class="sub_Controler">
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">favorite_border</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">repeat</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">shuffle</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">brightness_4</i></a>
+      <input type="range" id="volume" min="0" max="100">
+    </div>
   </div>
   <!--
   <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">pause</i></a>
   <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">repeat_one</i></a>
   <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">folder</i></a>
-  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">brightness_4</i></a>
   <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">favorite</i></a>
   -->
   <!-- Load Scripts -->
@@ -49,4 +46,5 @@
   <script type="text/javascript" src="js/app.js"></script>
   <!------------------>
 </body>
+
 </html>

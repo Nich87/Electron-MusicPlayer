@@ -16,7 +16,6 @@ body {
   bottom: 0;
   transform: translate(-50%, -50%);
   left: 85%;
-  display: flex;
 }
 
 .progress {
@@ -28,7 +27,9 @@ body {
   display: flex;
 }
 
+
 #Music_list {
   width: 50%;
   margin: 0 0 0 auto;
 }
+
