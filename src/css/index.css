@@ -16,9 +16,10 @@ body {
   bottom: 0;
   transform: translate(-50%, -50%);
   left: 85%;
+  top: 94%;
 }
 
-.progress {
+#player-progress {
   position: fixed;
   bottom: 0;
   transform: translate(-50%, -50%);
@@ -27,9 +28,18 @@ body {
   display: flex;
 }
 
+#current {
+  position: absolute;
+  bottom: 0;
+}
+
+#artwork {
+  margin-left: 70px;
+  width: 600px;
+  height: 600px;
+}
 
 #Music_list {
   width: 50%;
   margin: 0 0 0 auto;
 }
-
