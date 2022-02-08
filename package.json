@@ -1,11 +1,11 @@
 {
   "name": "electron-musicplayer",
-  "productName": "electron-musicplayer",
+  "productName": "Electunes",
   "version": "1.0.0",
   "description": "Simple MusicPlayer",
   "main": "src/index.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "chcp 65001 && electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -18,7 +18,9 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "Electunes.ico"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
@@ -44,7 +46,10 @@
     }
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "about-window": "^1.15.2",
+    "electron-squirrel-startup": "^1.0.0",
+    "howler": "^2.2.3",
+    "musicmetadata": "^2.0.5"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.63",
@@ -52,6 +57,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.63",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
     "@electron-forge/maker-zip": "^6.0.0-beta.63",
-    "electron": "17.0.0"
+    "electron": "17.0.0",
+    "electron-builder": "^22.14.5"
   }
 }

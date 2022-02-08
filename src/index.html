@@ -1,13 +1,57 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-    <button style="--button-size: 32px;" class="player" aria-label="再生"></button>
-  </body>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="css/index.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+  <div id="container">
+    <table id="Music_list">
+      <thead>
+        <th>曲名</th>
+        <th>アーティスト</th>
+        <th>長さ</th>
+      </thead>
+    </table>
+    <div class="Controler">
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">replay_10</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons" id="btn_previous">skip_previous</i></a>
+      <a class="btn-floating btn-small waves-effect waves-light red" id="btn_play"><i
+          class="material-icons">play_arrow</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons" id="btn_skip">skip_next</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">forward_10</i></a>
+    </div>
+
+    <div class="sub_Controler">
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">favorite_border</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">repeat</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">shuffle</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">brightness_4</i></a>
+      <input type="range" id="volume" min="0" max="100">
+    </div>
+
+  <img src="" id="artwork">
+    <div>
+      <input type="range" id="player-progress" min="0" max="100" />
+      <em id="current">00:00</em>
+    </div>
+  </div>
+  <!--
+  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">pause</i></a>
+  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">repeat_one</i></a>
+  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">folder</i></a>
+  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">favorite</i></a>
+  -->
+  <!-- Load Scripts -->
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <!------------------>
+</body>
+
 </html>
+

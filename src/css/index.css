@@ -1,0 +1,45 @@
+body {
+  margin: auto;
+  background-color: #FFFFFF;
+}
+
+.Controler {
+  position: fixed;
+  bottom: 0;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  display: flex;
+}
+
+.sub_Controler {
+  position: fixed;
+  bottom: 0;
+  transform: translate(-50%, -50%);
+  left: 85%;
+  top: 94%;
+}
+
+#player-progress {
+  position: fixed;
+  bottom: 0;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 85%;
+  display: flex;
+}
+
+#current {
+  position: absolute;
+  bottom: 0;
+}
+
+#artwork {
+  margin-left: 70px;
+  width: 600px;
+  height: 600px;
+}
+
+#Music_list {
+  width: 50%;
+  margin: 0 0 0 auto;
+}
