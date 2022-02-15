@@ -1,4 +1,4 @@
-/* ---------------------module import-------------------------- */
+/* ---------------------Module import-------------------------- */
 const { app, BrowserWindow, Menu, dialog } = require('electron');
 const openAboutWindow = require('about-window').default;
 if (require('electron-squirrel-startup')) app.quit();
@@ -6,14 +6,15 @@ const config = require('./config.json');
 const mm = require('musicmetadata');
 const path = require('path');
 const fs = require('fs');
-/* ---------------------module import-------------------------- */
+/* ---------------------Module import-------------------------- */
 
+/* ---------------------  Initialize   -------------------------*/
 let mainWindow,filelist = [];
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 600,
-    height: 600,
+    width: 1400,
+    height: 1080,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, './js/preload.js'),
@@ -35,18 +36,26 @@ const information = {
   click: aboutApplication
 }
 
+/* ---------------------  Initialize  ------------------------- */
+
+/* ---------------------Event listeners------------------------ */
+
 app.on('ready', () =>{
   createWindow();
   SetMenu(openFolder,information);
-});
+})
 
-app.on('window-all-closed', () => {
+.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
-});
+})
 
-app.on('activate', () => {
+.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
+
+/* ---------------------Event listeners------------------------ */
+
+/* ----------------------- Functions -------------------------- */
 
 function SetMenu(openFolder,information) {
   const menu = Menu.buildFromTemplate([openFolder,information]);
@@ -110,6 +119,6 @@ const play = () => {
   let json = {...filelist};
   json = Object.assign({},filelist);
   json = filelist.reduce((json, value, key) =>{json[key] = value; return json;},{});
-  console.log(json);
   mainWindow.webContents.send('start',json);
 }
+/* ----------------------- Functions -------------------------- */

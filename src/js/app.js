@@ -8,16 +8,16 @@
     const player_progress = document.getElementById('player-progress');
     const artwork = document.getElementById('artwork');
     const current_time_text = document.getElementById('current');
+    const duration_time_text = document.getElementById('duration');
     const play_btn_inner = play_btn.getElementsByTagName('i')[0];
     const title = document.getElementById('title');
     const artist = document.getElementById('artist');
     const album = document.getElementById('album');
     const volume = document.getElementById('volume');
     const collection = document.getElementById('Music_list');
-    //const collection_Top = document.getElementById('NowPlaying');
 
     // Local variables
-    let current_song, list;
+    let current_song, list, g_volume=0.5;
 
 
 
@@ -41,18 +41,19 @@
         list.push(list.shift());
         current_song.unload();
         play_next_song();
-        console.log('skip');
     });
 
     previous.addEventListener('click', () => {
         list.unshift(list.pop());
         current_song.unload();
         play_next_song();
-        console.log('previous');
     });
 
     player_progress.addEventListener('input', () => current_song.seek(player_progress.value / 200));
-    volume.addEventListener('input', () => current_song.volume(volume.value / 100));
+    volume.addEventListener('input', () => {
+        current_song.volume(volume.value / 100);
+        g_volume = volume.value / 100;
+    });
 
 
 
@@ -65,8 +66,6 @@
         current_time_text.textContent = current;
     }, 16);
 
-
-
     // Functions
     function play_next_song() {
         current_song = new Howl({
@@ -74,11 +73,13 @@
             loop: true,
             autoplay: true,
             html5: true,
+            volume: g_volume,
             onload: () => {
-                meta_parse();
                 collection_init();
+                meta_parse();
                 const duration = current_song.duration();
                 player_progress.max = duration * 200;
+                duration_time_text.textContent = seconds_to_time(Math.trunc(duration));
             },
             onend: () => {
                 current_song.unload();
@@ -93,19 +94,23 @@
     function meta_parse() {
         musicmetadata(fs.createReadStream(list[0]), (err, metadata) => {
             if (err) return console.log(`${err}\n${err.stack.split('\n')[1]}`);
-            console.log(metadata)
             title.textContent = metadata.title || '曲名が設定されていません';
             artist.textContent = metadata.artist[0] || 'Unknown';
             album.textContent = metadata.album || 'Single';
             const base64Data = metadata?.picture?.[0]?.data?.toString('base64');
             if (base64Data) artwork.src = 'data:image/png;base64,' + base64Data;
-            else artwork.src = "https://1.bp.blogspot.com/-D2I7Z7-HLGU/Xlyf7OYUi8I/AAAAAAABXq4/jZ0035aDGiE5dP3WiYhlSqhhMgGy8p7zACNcBGAsYHQ/s1600/no_image_square.jpg";
-        });
-    }
+            else artwork.src = "../Assets/no_image_square.jpg";
+
+            new Notification(metadata.title || '曲名が設定されていません', {
+                body: metadata.artist[0] || 'Unknown',
+                silent: true
+            });
+    });
+}
 
     function collection_init() {
-        collection.innerHTML="";
-        for(let i = 0; i<10; i++){
+        while(collection.lastChild) collection.removeChild(collection.lastChild);
+        for(let i = 0; list.length >= 10 ? i < 10 : list.length === i; i++){
             musicmetadata(fs.createReadStream(list[i]), (err, metadata) => {
                 if (err) return console.log(`${err}\n${err.stack.split('\n')[1]}`);
                 let listCode = `
@@ -117,6 +122,8 @@
                 </li>
                 `;
                 collection.insertAdjacentHTML('beforeend',listCode);
+                const collection_inner = collection.getElementsByTagName('i')[0];
+                collection_inner.textContent = 'play_arrow';
         });
     }
 }
