@@ -25,6 +25,7 @@ body {
   transform: translate(-50%, -50%);
   left: 50%;
   top: 85%;
+  height: 50px;
   display: flex;
 }
 
@@ -34,12 +35,20 @@ body {
 }
 
 #artwork {
+  margin-top: 70px;
   margin-left: 70px;
   width: 600px;
   height: 600px;
 }
 
 #Music_list {
-  width: 50%;
+  position:fixed;
+  width: 30%;
+  left: 70%;
   margin: 0 0 0 auto;
+}
+
+#metadata {
+  margin-left: 70px;
+  width: 600px;
 }
