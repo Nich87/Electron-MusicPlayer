@@ -11,16 +11,12 @@
 
 <body>
   <div id="container">
-    <table id="Music_list">
-      <thead>
-        <th>曲名</th>
-        <th>アーティスト</th>
-        <th>長さ</th>
-      </thead>
-    </table>
+    <ul class="collection" id="Music_list"></ul>
+
     <div class="Controler">
       <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">replay_10</i></a>
-      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons" id="btn_previous">skip_previous</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons"
+          id="btn_previous">skip_previous</i></a>
       <a class="btn-floating btn-small waves-effect waves-light red" id="btn_play"><i
           class="material-icons">play_arrow</i></a>
       <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons" id="btn_skip">skip_next</i></a>
@@ -35,7 +31,15 @@
       <input type="range" id="volume" min="0" max="100">
     </div>
 
-  <img src="" id="artwork">
+    <img src="" id="artwork">
+    <ul class="collection" id="metadata">
+      <li class="collection-item" id="title">
+        </p>
+      <li class="collection-item" id="artist">
+        </p>
+      <li class="collection-item" id="album">
+        </p>
+    </ul>
     <div>
       <input type="range" id="player-progress" min="0" max="100" />
       <em id="current">00:00</em>
@@ -54,4 +58,3 @@
 </body>
 
 </html>
-
