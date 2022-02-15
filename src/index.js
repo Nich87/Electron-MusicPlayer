@@ -105,7 +105,7 @@ const walkSync = function (dir, filelist) {
 
 function aboutApplication() {
   openAboutWindow({
-    icon_path: path.join(__dirname, '../Electunes.png'),
+    icon_path: path.join(__dirname, '../Assets/Electunes.png'),
     product_name: 'Electunes',
     homepage: 'https://github.com/Nich87/Electron-MusicPlayer',
     copyright: 'By Nich87',
