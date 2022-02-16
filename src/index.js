@@ -3,7 +3,6 @@ const { app, BrowserWindow, Menu, dialog } = require('electron');
 const openAboutWindow = require('about-window').default;
 if (require('electron-squirrel-startup')) app.quit();
 const config = require('./config.json');
-const mm = require('musicmetadata');
 const path = require('path');
 const fs = require('fs');
 /* ---------------------Module import-------------------------- */

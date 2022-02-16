@@ -1,11 +1,12 @@
 const { ipcRenderer } = require('electron');
 const { Howl } = require('howler');
-const musicmetadata = require('musicmetadata');
+const metadata = require('music-metadata');
 const { seconds_to_time } = require('../../Util/convert');
 const fs = require('fs');
-
+const util = require('util');
 global.ipcRenderer = ipcRenderer;
 global.Howl = Howl;
-global.musicmetadata = musicmetadata;
+global.mm = metadata;
 global.seconds_to_time = seconds_to_time;
 global.fs = fs;
+global.util = util;

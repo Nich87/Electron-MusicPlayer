@@ -1,25 +1,20 @@
 (() => { // Wrap with a function to avoid global pollution
 
-
     // HTML elements
-    const play_btn = document.getElementById('btn_play');
-    const skip = document.getElementById('btn_skip');
-    const previous = document.getElementById('btn_previous');
     const player_progress = document.getElementById('player-progress');
-    const artwork = document.getElementById('artwork');
+    const btn_play = document.getElementById('btn_play');
+    const btn_skip = document.getElementById('btn_skip');
+    const btn_previous = document.getElementById('btn_previous');
+    const btn_play_inner = btn_play.getElementsByTagName('i')[0];
     const current_time_text = document.getElementById('current');
     const duration_time_text = document.getElementById('duration');
-    const play_btn_inner = play_btn.getElementsByTagName('i')[0];
-    const title = document.getElementById('title');
-    const artist = document.getElementById('artist');
-    const album = document.getElementById('album');
+    const artwork = document.getElementById('artwork');
     const volume = document.getElementById('volume');
     const collection = document.getElementById('Music_list');
+    const meta = document.getElementById('metadata');
 
     // Local variables
-    let current_song, list, g_volume=0.5;
-
-
+    let current_song, list, g_volume = 0.5;
 
     // Initialization
     M.AutoInit();
@@ -27,23 +22,22 @@
         filelist = Object.values(filelist);
         console.log(filelist);
         list = filelist;
-        collection_init();
         play_next_song();
     });
 
     // Register event listeners
-    play_btn.addEventListener('click', () => {
+    btn_play.addEventListener('click', () => {
         if (current_song.playing()) current_song.pause();
         else current_song.play();
     });
 
-    skip.addEventListener('click', () => {
+    btn_skip.addEventListener('click', () => {
         list.push(list.shift());
         current_song.unload();
         play_next_song();
     });
 
-    previous.addEventListener('click', () => {
+    btn_previous.addEventListener('click', () => {
         list.unshift(list.pop());
         current_song.unload();
         play_next_song();
@@ -86,45 +80,58 @@
                 list.push(list.shift());
                 play_next_song();
             },
-            onplay: () => play_btn_inner.textContent = 'pause',
-            onpause: () => play_btn_inner.textContent = 'play_arrow',
+            onplay: () => btn_play_inner.textContent = 'pause',
+            onpause: () => btn_play_inner.textContent = 'play_arrow',
         });
     }
 
-    function meta_parse() {
-        musicmetadata(fs.createReadStream(list[0]), (err, metadata) => {
-            if (err) return console.log(`${err}\n${err.stack.split('\n')[1]}`);
-            title.textContent = metadata.title || '曲名が設定されていません';
-            artist.textContent = metadata.artist[0] || 'Unknown';
-            album.textContent = metadata.album || 'Single';
-            const base64Data = metadata?.picture?.[0]?.data?.toString('base64');
-            if (base64Data) artwork.src = 'data:image/png;base64,' + base64Data;
-            else artwork.src = "../Assets/no_image_square.jpg";
+    async function meta_parse() {
+        const metadata = await mm.parseFile(list[0]);
+        /**
+         * @param {String} bitrate
+         * @param {String} bitsparsample
+         * @param {Boolean} lossless
+         * @param {String} sampleRate
+         */
+        const info = {
+            bitrate: String(metadata.format.bitrate).slice(0,3) + 'kbps',
+            bitspersample: metadata.format.bitsPerSample + 'bit',
+            lossless: metadata.format.lossless,
+            sampleRate: metadata.format.sampleRate + 'Hz'
+        };
+        while (meta.lastChild) meta.removeChild(meta.lastChild);
+        let code = `
+        <li class="collection-item" id="title">${metadata.common.title || '曲名が設定されていません'}</li>
+        <li class="collection-item" id="artist">${metadata.common.artist || 'Unknown'}</li>
+        <li class="collection-item" id="album">${metadata.common.album || 'Single'}</li>
+        `;
+        if (info.lossless) code += '<img src="../Assets/hires-logo.png" id="hires">';
+        meta.insertAdjacentHTML('beforeend',code);
+        const base64Data = metadata?.common.picture?.[0]?.data?.toString('base64');
+        if (base64Data) artwork.src = 'data:image/png;base64,' + base64Data;
+        else artwork.src = "../Assets/no_image_square.jpg";
 
-            new Notification(metadata.title || '曲名が設定されていません', {
-                body: metadata.artist[0] || 'Unknown',
+        new Notification(metadata.common.title || '曲名が設定されていません', {
+                body: metadata.common.artist || 'Unknown',
                 silent: true
             });
-    });
 }
 
-    function collection_init() {
+    async function collection_init() {
         while(collection.lastChild) collection.removeChild(collection.lastChild);
-        for(let i = 0; list.length >= 10 ? i < 10 : list.length === i; i++){
-            musicmetadata(fs.createReadStream(list[i]), (err, metadata) => {
-                if (err) return console.log(`${err}\n${err.stack.split('\n')[1]}`);
-                let listCode = `
+        for (let i = 0; i < Math.min(list.length, 30); i++){
+            const metadata = await mm.parseFile(list[i]);
+                const listCode = `
                 <li class="collection-item avatar">
                 <i class="material-icons circle red">audiotrack</i>
-                <span class="title">${metadata.title || '曲名が設定されていません'}</span>
-                <p>${metadata.artist[0] || 'Unknown'}</p>
-                <p>${metadata.album || 'Single'}</p>
+                <span class="title">${metadata.common.title || '曲名が設定されていません'}</span>
+                <p>${metadata.common.artist || 'Unknown'}</p>
+                <p>${metadata.common.album || 'Single'}</p>
                 </li>
                 `;
                 collection.insertAdjacentHTML('beforeend',listCode);
                 const collection_inner = collection.getElementsByTagName('i')[0];
                 collection_inner.textContent = 'play_arrow';
-        });
     }
 }
 })();
