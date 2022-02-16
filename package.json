@@ -1,7 +1,7 @@
 {
   "name": "electron-musicplayer",
   "productName": "Electunes",
-  "version": "1.0.0",
+  "version": "1.0.0-rc1",
   "description": "Simple MusicPlayer",
   "main": "src/index.js",
   "scripts": {
@@ -19,7 +19,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "Electunes.ico"
+        "icon": "Assets/Electunes.ico"
       },
       "makers": [
         {
@@ -49,7 +49,7 @@
     "about-window": "^1.15.2",
     "electron-squirrel-startup": "^1.0.0",
     "howler": "^2.2.3",
-    "musicmetadata": "^2.0.5"
+    "music-metadata": "^7.11.8"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.63",
