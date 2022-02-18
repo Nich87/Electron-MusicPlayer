@@ -24,7 +24,6 @@ const createWindow = () => {
   if (config.debug) mainWindow.webContents.openDevTools();
 };
 
-
 const openFolder = {
   label: 'Open Folder',
   click: openFolderDialog
@@ -42,10 +41,6 @@ const information = {
 app.on('ready', () =>{
   createWindow();
   SetMenu(openFolder,information);
-})
-
-.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
 })
 
 .on('activate', () => {

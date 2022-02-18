@@ -1,6 +1,7 @@
 body {
   margin: auto;
   background-color: #FFFFFF;
+  -webkit-user-select: none;
 }
 
 .player {
