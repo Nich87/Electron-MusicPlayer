@@ -111,9 +111,17 @@
         if (base64Data) artwork.src = 'data:image/png;base64,' + base64Data;
         else artwork.src = "../Assets/no_image_square.jpg";
 
+        if(!base64Data) {
+            return new Notification(metadata.common.title || '曲名が設定されていません', {
+                body: metadata.common.artist || 'Unknown',
+                silent: true,
+                icon: "../Assets/no_image_square.jpg"
+            });
+        }
         new Notification(metadata.common.title || '曲名が設定されていません', {
                 body: metadata.common.artist || 'Unknown',
-                silent: true
+                silent: true,
+                icon: 'data:image/png;base64,' + base64Data
             });
 }
 
