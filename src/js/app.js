@@ -5,6 +5,8 @@
     const btn_play = document.getElementById('btn_play');
     const btn_skip = document.getElementById('btn_skip');
     const btn_previous = document.getElementById('btn_previous');
+    const btn_forward = document.getElementById('btn_forward');
+    const btn_replay = document.getElementById('btn_replay');
     const btn_play_inner = btn_play.getElementsByTagName('i')[0];
     const current_time_text = document.getElementById('current');
     const duration_time_text = document.getElementById('duration');
@@ -41,6 +43,14 @@
         list.unshift(list.pop());
         current_song.unload();
         play_next_song();
+    });
+
+    btn_forward.addEventListener('click', () => {
+        current_song.seek(current_song.seek() + 10);
+    });
+
+    btn_replay.addEventListener('click', () => {
+        current_song.seek(current_song.seek() - 10);
     });
 
     player_progress.addEventListener('input', () => current_song.seek(player_progress.value / 200));
