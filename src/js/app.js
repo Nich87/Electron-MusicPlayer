@@ -7,6 +7,7 @@
     const btn_previous = document.getElementById('btn_previous');
     const btn_forward = document.getElementById('btn_forward');
     const btn_replay = document.getElementById('btn_replay');
+    const btn_shuffle = document.getElementById('btn_shuffle');
     const btn_play_inner = btn_play.getElementsByTagName('i')[0];
     const current_time_text = document.getElementById('current');
     const duration_time_text = document.getElementById('duration');
@@ -51,6 +52,12 @@
 
     btn_replay.addEventListener('click', () => {
         current_song.seek(current_song.seek() - 10);
+    });
+
+    btn_shuffle.addEventListener('click', () => {
+        current_song.unload();
+        list = random(list);
+        play_next_song();
     });
 
     player_progress.addEventListener('input', () => current_song.seek(player_progress.value / 200));
@@ -111,9 +118,9 @@
         };
         while (meta.lastChild) meta.removeChild(meta.lastChild);
         let code = `
-        <li class="collection-item" id="title">${metadata.common.title || '曲名が設定されていません'}</li>
-        <li class="collection-item" id="artist">${metadata.common.artist || 'Unknown'}</li>
-        <li class="collection-item" id="album">${metadata.common.album || 'Single'}</li>
+        <li class="collection-item" id="title">${metadata.common.title ?? '曲名が設定されていません'}</li>
+        <li class="collection-item" id="artist">${metadata.common.artist ?? 'Unknown'}</li>
+        <li class="collection-item" id="album">${metadata.common.album ?? 'Single'}</li>
         `;
         if (info.lossless) code += '<img src="../Assets/hires-logo.png" id="hires">';
         meta.insertAdjacentHTML('beforeend',code);
@@ -122,14 +129,14 @@
         else artwork.src = "../Assets/no_image_square.jpg";
 
         if(!base64Data) {
-            return new Notification(metadata.common.title || '曲名が設定されていません', {
-                body: metadata.common.artist || 'Unknown',
+            return new Notification(metadata.common.title ?? '曲名が設定されていません', {
+                body: metadata.common.artist ?? 'Unknown',
                 silent: true,
                 icon: "../Assets/no_image_square.jpg"
             });
         }
-        new Notification(metadata.common.title || '曲名が設定されていません', {
-                body: metadata.common.artist || 'Unknown',
+        new Notification(metadata.common.title ?? '曲名が設定されていません', {
+                body: metadata.common.artist ?? 'Unknown',
                 silent: true,
                 icon: 'data:image/png;base64,' + base64Data
             });
@@ -142,9 +149,9 @@
                 const listCode = `
                 <li class="collection-item avatar">
                 <i class="material-icons circle red">audiotrack</i>
-                <span class="title">${metadata.common.title || '曲名が設定されていません'}</span>
-                <p>${metadata.common.artist || 'Unknown'}</p>
-                <p>${metadata.common.album || 'Single'}</p>
+                <span class="title">${metadata.common.title ?? '曲名が設定されていません'}</span>
+                <p>${metadata.common.artist ?? 'Unknown'}</p>
+                <p>${metadata.common.album ?? 'Single'}</p>
                 </li>
                 `;
                 collection.insertAdjacentHTML('beforeend',listCode);
