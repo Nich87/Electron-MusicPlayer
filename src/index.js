@@ -8,7 +8,7 @@ const fs = require('fs');
 /* ---------------------Module import-------------------------- */
 
 /* ---------------------  Initialize   -------------------------*/
-let mainWindow,filelist = [];
+let mainWindow;
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -18,7 +18,7 @@ const createWindow = () => {
       nodeIntegration: true,
       preload: path.join(__dirname, './js/preload.js'),
       contextIsolation: false
-    },
+    }
   });
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
   if (config.debug) mainWindow.webContents.openDevTools();
@@ -32,7 +32,7 @@ const openFolder = {
 const information = {
   label: 'Information',
   click: aboutApplication
-}
+};
 
 /* ---------------------  Initialize  ------------------------- */
 
@@ -71,31 +71,34 @@ function openFolderDialog() {
 
 function scanDir(filePath) {
   if(!filePath || filePath[0] === 'undefined') return;
-  walkSync(filePath, filelist);
-  play();
+  const filelist = walkSync(filePath);
+  play(filelist);
 }
 
-const walkSync = function (dir, filelist) {
-  files = fs.readdirSync(dir,'utf8');
-  filelist = filelist || [];
-  files.forEach(function (file) {
-    if (fs.statSync(path.join(dir, file)).isDirectory()) {
-      filelist = walkSync(path.join(dir, file), filelist);
-    } else {
-      if (file.endsWith('.mp3') ||
-      file.endsWith('.wav')||
-      file.endsWith('.flac')||
-      file.endsWith('.ogg')||
-      file.endsWith('.aac')||
-      file.endsWith('.m4a')||
-      file.endsWith('.wma')||
-      file.endsWith('.alac')||
+function walkSync(dir, filelist=[]) {
+  const files = fs.readdirSync(dir,'utf8');
+  files.forEach((file) => {
+    const filepath = path.join(dir, file);
+    if (fs.statSync(filepath).isDirectory()) {
+      walkSync(filepath, filelist);
+      return;
+    }
+    if (
+      file.endsWith('.mp3') ||
+      file.endsWith('.wav') ||
+      file.endsWith('.flac') ||
+      file.endsWith('.ogg') ||
+      file.endsWith('.aac') ||
+      file.endsWith('.m4a') ||
+      file.endsWith('.wma') ||
+      file.endsWith('.alac') ||
       file.endsWith('.webm')
-      ) filelist.push(path.join(dir, file));
+    ) {
+      filelist.push(filepath);
     }
   });
   return filelist;
-};
+}
 
 function aboutApplication() {
   openAboutWindow({
@@ -109,10 +112,10 @@ function aboutApplication() {
 }
 
 
-const play = () => {
-  let json = {...filelist};
-  json = Object.assign({},filelist);
-  json = filelist.reduce((json, value, key) =>{json[key] = value; return json;},{});
-  mainWindow.webContents.send('start',json);
+function play(filelist) {
+  mainWindow.webContents.send('start', filelist.reduce((json, value, key) => {
+    json[key] = value; 
+    return json;
+  }, {}));
 }
 /* ----------------------- Functions -------------------------- */
