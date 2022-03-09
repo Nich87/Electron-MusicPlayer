@@ -125,20 +125,13 @@
         if (info.lossless) code += '<img src="../Assets/hires-logo.png" id="hires">';
         meta.insertAdjacentHTML('beforeend',code);
         const base64Data = metadata?.common.picture?.[0]?.data?.toString('base64');
-        if (base64Data) artwork.src = 'data:image/png;base64,' + base64Data;
-        else artwork.src = "../Assets/no_image_square.jpg";
+        const imageUrl = base64Data ? 'data:image/png;base64,' + base64Data : "../Assets/no_image_square.jpg";
+        artwork.src = imageUrl;
 
-        if(!base64Data) {
-            return new Notification(metadata.common.title ?? '曲名が設定されていません', {
-                body: metadata.common.artist ?? 'Unknown',
-                silent: true,
-                icon: "../Assets/no_image_square.jpg"
-            });
-        }
         new Notification(metadata.common.title ?? '曲名が設定されていません', {
             body: metadata.common.artist ?? 'Unknown',
             silent: true,
-            icon: 'data:image/png;base64,' + base64Data
+            icon: imageUrl
         });
     }
 
