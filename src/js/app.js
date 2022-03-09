@@ -36,12 +36,14 @@
 
     btn_skip.addEventListener('click', () => {
         list.push(list.shift());
+        current_song.stop();
         current_song.unload();
         play_next_song();
     });
 
     btn_previous.addEventListener('click', () => {
         list.unshift(list.pop());
+        current_song.stop();
         current_song.unload();
         play_next_song();
     });
@@ -81,7 +83,6 @@
     function play_next_song() {
         current_song = new Howl({
             src: list[0],
-            loop: true,
             autoplay: true,
             html5: true,
             volume: g_volume,
