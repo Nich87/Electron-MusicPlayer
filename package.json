@@ -1,7 +1,7 @@
 {
   "name": "electron-musicplayer",
   "productName": "Electunes",
-  "version": "1.0.0-rc1",
+  "version": "1.0.0-rc2",
   "description": "Simple MusicPlayer",
   "main": "src/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
   },
-  "keywords": [],
+  "keywords": ["Electron","MusicPlayer"],
   "author": {
     "name": "Nich87"
   },
