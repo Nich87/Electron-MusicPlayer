@@ -112,7 +112,7 @@
          * @param {String} sampleRate
          */
         const info = {
-            bitrate: String(metadata.format.bitrate).slice(0,3) + 'kbps',
+            bitrate: String(metadata.format.bitrate).slice(0, 3) + 'kbps',
             bitspersample: metadata.format.bitsPerSample + 'bit',
             lossless: metadata.format.lossless,
             sampleRate: metadata.format.sampleRate + 'Hz'
@@ -124,7 +124,7 @@
         <li class="collection-item" id="album">${metadata.common.album ?? 'Single'}</li>
         `;
         if (info.lossless) code += '<img src="../Assets/hires-logo.png" id="hires">';
-        meta.insertAdjacentHTML('beforeend',code);
+        meta.insertAdjacentHTML('beforeend', code);
         const base64Data = metadata?.common.picture?.[0]?.data?.toString('base64');
         const imageUrl = base64Data ? 'data:image/png;base64,' + base64Data : "../Assets/no_image_square.jpg";
         artwork.src = imageUrl;
@@ -137,8 +137,8 @@
     }
 
     async function collection_init() {
-        while(collection.lastChild) collection.removeChild(collection.lastChild);
-        for (let i = 0; i < Math.min(list.length, 30); i++){
+        while (collection.lastChild) collection.removeChild(collection.lastChild);
+        for (let i = 0; i < Math.min(list.length, 30); i++) {
             const metadata = await mm.parseFile(list[i]);
             const listCode = `
             <li class="collection-item avatar">
@@ -148,7 +148,7 @@
             <p>${metadata.common.album ?? 'Single'}</p>
             </li>
             `;
-            collection.insertAdjacentHTML('beforeend',listCode);
+            collection.insertAdjacentHTML('beforeend', listCode);
             const collection_inner = collection.getElementsByTagName('i')[0];
             collection_inner.textContent = 'play_arrow';
         }
