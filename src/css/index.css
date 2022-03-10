@@ -71,7 +71,39 @@ body {
 }
 
 #metadata {
+  position:absolute;
   margin-left: 50px;
   max-width: 600px;
   width: 50%;
+}
+
+@media screen and ( max-width:350px ) {
+  #artwork {
+    margin-top: 50px;
+    margin-left: 50px;
+    max-width: 50%;
+    max-height: 100px;
+  }
+}
+
+ @media screen and ( max-height:300px ) {
+   #metadata{
+     display: none;
+   }
+ }
+
+  @media screen and ( max-width:650px ) {
+  #artwork {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  }
+
+  #Music_list {
+    display: none;
+  }
+
+  .sub_Controler {
+    display: none;
+  }
 }

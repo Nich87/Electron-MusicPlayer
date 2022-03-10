@@ -5,6 +5,9 @@
     const btn_play = document.getElementById('btn_play');
     const btn_skip = document.getElementById('btn_skip');
     const btn_previous = document.getElementById('btn_previous');
+    const btn_forward = document.getElementById('btn_forward');
+    const btn_replay = document.getElementById('btn_replay');
+    const btn_shuffle = document.getElementById('btn_shuffle');
     const btn_play_inner = btn_play.getElementsByTagName('i')[0];
     const current_time_text = document.getElementById('current');
     const duration_time_text = document.getElementById('duration');
@@ -33,13 +36,29 @@
 
     btn_skip.addEventListener('click', () => {
         list.push(list.shift());
+        current_song.stop();
         current_song.unload();
         play_next_song();
     });
 
     btn_previous.addEventListener('click', () => {
         list.unshift(list.pop());
+        current_song.stop();
         current_song.unload();
+        play_next_song();
+    });
+
+    btn_forward.addEventListener('click', () => {
+        current_song.seek(current_song.seek() + 10);
+    });
+
+    btn_replay.addEventListener('click', () => {
+        current_song.seek(current_song.seek() - 10);
+    });
+
+    btn_shuffle.addEventListener('click', () => {
+        current_song.unload();
+        list = random(list);
         play_next_song();
     });
 
@@ -64,18 +83,17 @@
     function play_next_song() {
         current_song = new Howl({
             src: list[0],
-            loop: true,
             autoplay: true,
             html5: true,
             volume: g_volume,
-            onload: () => {
+            onload() {
                 collection_init();
                 meta_parse();
                 const duration = current_song.duration();
                 player_progress.max = duration * 200;
                 duration_time_text.textContent = seconds_to_time(Math.trunc(duration));
             },
-            onend: () => {
+            onend() {
                 current_song.unload();
                 list.push(list.shift());
                 play_next_song();
@@ -94,52 +112,45 @@
          * @param {String} sampleRate
          */
         const info = {
-            bitrate: String(metadata.format.bitrate).slice(0,3) + 'kbps',
+            bitrate: String(metadata.format.bitrate).slice(0, 3) + 'kbps',
             bitspersample: metadata.format.bitsPerSample + 'bit',
             lossless: metadata.format.lossless,
             sampleRate: metadata.format.sampleRate + 'Hz'
         };
         while (meta.lastChild) meta.removeChild(meta.lastChild);
         let code = `
-        <li class="collection-item" id="title">${metadata.common.title || '曲名が設定されていません'}</li>
-        <li class="collection-item" id="artist">${metadata.common.artist || 'Unknown'}</li>
-        <li class="collection-item" id="album">${metadata.common.album || 'Single'}</li>
+        <li class="collection-item" id="title">${metadata.common.title ?? '曲名が設定されていません'}</li>
+        <li class="collection-item" id="artist">${metadata.common.artist ?? 'Unknown'}</li>
+        <li class="collection-item" id="album">${metadata.common.album ?? 'Single'}</li>
         `;
         if (info.lossless) code += '<img src="../Assets/hires-logo.png" id="hires">';
-        meta.insertAdjacentHTML('beforeend',code);
+        meta.insertAdjacentHTML('beforeend', code);
         const base64Data = metadata?.common.picture?.[0]?.data?.toString('base64');
-        if (base64Data) artwork.src = 'data:image/png;base64,' + base64Data;
-        else artwork.src = "../Assets/no_image_square.jpg";
+        const imageUrl = base64Data ? 'data:image/png;base64,' + base64Data : "../Assets/no_image_square.jpg";
+        artwork.src = imageUrl;
 
-        if(!base64Data) {
-            return new Notification(metadata.common.title || '曲名が設定されていません', {
-                body: metadata.common.artist || 'Unknown',
-                silent: true,
-                icon: "../Assets/no_image_square.jpg"
-            });
-        }
-        new Notification(metadata.common.title || '曲名が設定されていません', {
-                body: metadata.common.artist || 'Unknown',
-                silent: true,
-                icon: 'data:image/png;base64,' + base64Data
-            });
-}
+        new Notification(metadata.common.title ?? '曲名が設定されていません', {
+            body: metadata.common.artist ?? 'Unknown',
+            silent: true,
+            icon: imageUrl
+        });
+    }
 
     async function collection_init() {
-        while(collection.lastChild) collection.removeChild(collection.lastChild);
-        for (let i = 0; i < Math.min(list.length, 30); i++){
+        while (collection.lastChild) collection.removeChild(collection.lastChild);
+        for (let i = 0; i < Math.min(list.length, 30); i++) {
             const metadata = await mm.parseFile(list[i]);
-                const listCode = `
-                <li class="collection-item avatar">
-                <i class="material-icons circle red">audiotrack</i>
-                <span class="title">${metadata.common.title || '曲名が設定されていません'}</span>
-                <p>${metadata.common.artist || 'Unknown'}</p>
-                <p>${metadata.common.album || 'Single'}</p>
-                </li>
-                `;
-                collection.insertAdjacentHTML('beforeend',listCode);
-                const collection_inner = collection.getElementsByTagName('i')[0];
-                collection_inner.textContent = 'play_arrow';
+            const listCode = `
+            <li class="collection-item avatar">
+            <i class="material-icons circle red">audiotrack</i>
+            <span class="title">${metadata.common.title ?? '曲名が設定されていません'}</span>
+            <p>${metadata.common.artist ?? 'Unknown'}</p>
+            <p>${metadata.common.album ?? 'Single'}</p>
+            </li>
+            `;
+            collection.insertAdjacentHTML('beforeend', listCode);
+            const collection_inner = collection.getElementsByTagName('i')[0];
+            collection_inner.textContent = 'play_arrow';
+        }
     }
-}
 })();
