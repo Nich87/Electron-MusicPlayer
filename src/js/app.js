@@ -36,12 +36,14 @@
 
     btn_skip.addEventListener('click', () => {
         list.push(list.shift());
+        current_song.stop();
         current_song.unload();
         play_next_song();
     });
 
     btn_previous.addEventListener('click', () => {
         list.unshift(list.pop());
+        current_song.stop();
         current_song.unload();
         play_next_song();
     });
@@ -81,18 +83,17 @@
     function play_next_song() {
         current_song = new Howl({
             src: list[0],
-            loop: true,
             autoplay: true,
             html5: true,
             volume: g_volume,
-            onload: () => {
+            onload() {
                 collection_init();
                 meta_parse();
                 const duration = current_song.duration();
                 player_progress.max = duration * 200;
                 duration_time_text.textContent = seconds_to_time(Math.trunc(duration));
             },
-            onend: () => {
+            onend() {
                 current_song.unload();
                 list.push(list.shift());
                 play_next_song();
@@ -125,38 +126,31 @@
         if (info.lossless) code += '<img src="../Assets/hires-logo.png" id="hires">';
         meta.insertAdjacentHTML('beforeend',code);
         const base64Data = metadata?.common.picture?.[0]?.data?.toString('base64');
-        if (base64Data) artwork.src = 'data:image/png;base64,' + base64Data;
-        else artwork.src = "../Assets/no_image_square.jpg";
+        const imageUrl = base64Data ? 'data:image/png;base64,' + base64Data : "../Assets/no_image_square.jpg";
+        artwork.src = imageUrl;
 
-        if(!base64Data) {
-            return new Notification(metadata.common.title ?? '曲名が設定されていません', {
-                body: metadata.common.artist ?? 'Unknown',
-                silent: true,
-                icon: "../Assets/no_image_square.jpg"
-            });
-        }
         new Notification(metadata.common.title ?? '曲名が設定されていません', {
-                body: metadata.common.artist ?? 'Unknown',
-                silent: true,
-                icon: 'data:image/png;base64,' + base64Data
-            });
-}
+            body: metadata.common.artist ?? 'Unknown',
+            silent: true,
+            icon: imageUrl
+        });
+    }
 
     async function collection_init() {
         while(collection.lastChild) collection.removeChild(collection.lastChild);
         for (let i = 0; i < Math.min(list.length, 30); i++){
             const metadata = await mm.parseFile(list[i]);
-                const listCode = `
-                <li class="collection-item avatar">
-                <i class="material-icons circle red">audiotrack</i>
-                <span class="title">${metadata.common.title ?? '曲名が設定されていません'}</span>
-                <p>${metadata.common.artist ?? 'Unknown'}</p>
-                <p>${metadata.common.album ?? 'Single'}</p>
-                </li>
-                `;
-                collection.insertAdjacentHTML('beforeend',listCode);
-                const collection_inner = collection.getElementsByTagName('i')[0];
-                collection_inner.textContent = 'play_arrow';
+            const listCode = `
+            <li class="collection-item avatar">
+            <i class="material-icons circle red">audiotrack</i>
+            <span class="title">${metadata.common.title ?? '曲名が設定されていません'}</span>
+            <p>${metadata.common.artist ?? 'Unknown'}</p>
+            <p>${metadata.common.album ?? 'Single'}</p>
+            </li>
+            `;
+            collection.insertAdjacentHTML('beforeend',listCode);
+            const collection_inner = collection.getElementsByTagName('i')[0];
+            collection_inner.textContent = 'play_arrow';
+        }
     }
-}
 })();
