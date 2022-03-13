@@ -11,7 +11,10 @@
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
   },
-  "keywords": ["Electron","MusicPlayer"],
+  "keywords": [
+    "Electron",
+    "MusicPlayer"
+  ],
   "author": {
     "name": "Nich87"
   },
@@ -47,9 +50,10 @@
   },
   "dependencies": {
     "about-window": "^1.15.2",
+    "discord-rpc": "^4.0.1",
     "electron-squirrel-startup": "^1.0.0",
     "howler": "^2.2.3",
-    "music-metadata": "^7.11.8"
+    "music-metadata": "^7.12.2"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.63",

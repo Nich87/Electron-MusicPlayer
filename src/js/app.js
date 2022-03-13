@@ -134,6 +134,25 @@
             silent: true,
             icon: imageUrl
         });
+
+        client.request('SET_ACTIVITY', {
+            pid: process.pid,
+            activity: {
+                state: '再生中',
+                details: `${metadata.common.title}`,
+                assets: {
+                    large_image: 'f1c1ac57-07e7-4f99-8007-7dde646b551d',
+                    large_text: "NowPlaying"
+                },
+                buttons: [
+                    { label: 'Download Electunes', url: 'https://github.com/Nich87/Electron-MusicPlayer'},
+                    { label: 'Developer', url:'https://twitter.com/const_root'}
+                ],
+                timestamps:{
+                    start: Date.now(),
+                }
+            }
+        });
     }
 
     async function collection_init() {
