@@ -22,6 +22,11 @@
     // Initialization
     M.AutoInit();
     ipcRenderer.on('start', (_args, filelist) => {
+        if(current_song) {
+            current_song.stop();
+            current_song.unload();
+            list = null;
+        }
         filelist = Object.values(filelist);
         console.log(filelist);
         list = filelist;
@@ -146,7 +151,7 @@
                 },
                 buttons: [
                     { label: 'Download Electunes', url: 'https://github.com/Nich87/Electron-MusicPlayer'},
-                    { label: 'Developer', url:'https://twitter.com/const_root'}
+                    { label: 'Developer', url:'https://twitter.com/const_root'},
                 ],
                 timestamps:{
                     start: Date.now(),
