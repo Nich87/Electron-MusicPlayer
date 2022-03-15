@@ -15,10 +15,8 @@
     <div id="player">
       <div class="Controler">
         <a class="btn-flat btn-small waves-effect waves-light" id="btn_replay"><i class="material-icons">replay_10</i></a>
-        <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons"
-            id="btn_previous">skip_previous</i></a>
-        <a class="btn-floating btn-small waves-effect waves-light red" id="btn_play"><i
-            class="material-icons">play_arrow</i></a>
+        <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons" id="btn_previous">skip_previous</i></a>
+        <a class="btn-floating btn-small waves-effect waves-light red" id="btn_play"><i class="material-icons">play_arrow</i></a>
         <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons" id="btn_skip">skip_next</i></a>
         <a class="btn-flat btn-small waves-effect waves-light" id="btn_forward"><i class="material-icons">forward_10</i></a>
       </div>
@@ -35,11 +33,26 @@
       </div>
     </div>
     <img class="responsive-img" src="" id="artwork">
-    <ul class="collection" id="metadata">
+    <ul class="collection" id="metadata" style="display:none">
+      <li id="title" class="collection-item"></li>
+      <li id="artist" class="collection-item"></li>
+      <li id="album" class="collection-item"></li>
+      <img src="../Assets/hires-logo.png" id="hires">
     </ul>
   </div>
 
-  <div id="search"></div>
+  <div id="search">
+    <div class="row" id="search-box" style="display:none">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="textarea1" class="materialize-textarea"></textarea>
+                    <label for="textarea1">検索ワードを入力してください</label>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
   <!-- Load Scripts -->
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
