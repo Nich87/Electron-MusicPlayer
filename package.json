@@ -1,15 +1,13 @@
 {
   "name": "electron-musicplayer",
   "productName": "Electunes",
-  "version": "1.0.0-rc2",
+  "version": "1.0.0-rc3",
   "description": "Simple MusicPlayer",
   "main": "src/index.js",
   "scripts": {
     "start": "chcp 65001 && electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "make": "npx electron-builder --win --x64 --dir",
+    "package": "npx electron-builder --win --x64"
   },
   "keywords": [
     "Electron",
@@ -19,33 +17,9 @@
     "name": "Nich87"
   },
   "license": "MIT",
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "Assets/Electunes.ico"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "myapp"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
+  "build": {
+    "win": {
+      "icon": "Assets/Electunes.ico"
     }
   },
   "dependencies": {
