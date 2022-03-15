@@ -20,7 +20,7 @@
 
 
     // Local variables
-    let current_song, list, g_volume = 0.5, isShowing = false;
+    let current_song, list=[], g_volume = 0.5, isShowing = false;
 
     // Initialization
     M.AutoInit();
@@ -28,33 +28,29 @@
         if(current_song) {
             current_song.stop();
             current_song.unload();
-            list = null;
+            list = [];
         }
         filelist = Object.values(filelist);
         list = filelist;
         play_next_song();
     })
-        .on('mysongs', () => {
+    ipcRenderer.on('mysongs', () => {
             if (current_song) {
                 current_song.stop();
                 current_song.unload();
-                list = null;
+                list = [];
             }
             storage.getAll((error, data) => {
                 if (error) throw error;
+                console.log(data);
                 Object.values(data).forEach(el => {
-                    Object.values(el).forEach(el => {
-                        Object.values(el).forEach(value => {
-                            console.log(String(value));
-                            list.push(String(value));
+                    Object.values(el).forEach(value => {
+                            console.log(atob(value));
+                            list.push(atob(value));
                             if (list.length === fs.readdirSync(os.homedir() + '/playlist/').length) return play_next_song();
-                        });
                     });
                 });
             });
-
-
-
         })
     .on('search',() => {
         if(!isShowing){
@@ -113,8 +109,7 @@
 
     btn_favorite.addEventListener('click', () => {
         if (!current_song) return;
-        const str = current_song._src;
-
+        const str = btoa(current_song._src);
         storage.has(str, (error, hasKey) => {
             if (error) throw error;
             if (hasKey) {
@@ -151,6 +146,7 @@
     function play_next_song() {
         current_song = new Howl({
             src: list[0],
+            format: ['mp3', 'wav','flac','ogg','acc','m4a','wma','alac','webm','dolby'],
             autoplay: true,
             html5: true,
             volume: g_volume,
