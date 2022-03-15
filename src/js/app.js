@@ -49,8 +49,8 @@
             Object.values(data).forEach(el => {
                 Object.values(el).forEach(value => {
                     if (!value) return;
-                    console.log(atob(value));
-                    list.push(atob(value));
+                    console.log(decodeURIComponent(atob(value)));
+                    list.push(decodeURIComponent(atob(value)));
                 });
             });
             collection_init();
@@ -100,7 +100,7 @@
 
     btn_favorite.addEventListener('click', () => {
         if (!current_song) return;
-        const str = btoa(current_song._src);
+        const str = btoa(encodeURIComponent(current_song._src));
         storage.has(str, (error, hasKey) => {
             if (error) throw error;
             if (hasKey) {
@@ -237,7 +237,7 @@
     }
 
     function favorite_load() {
-        storage.has(btoa(current_song._src), (err, isfavorite) => {
+        storage.has(btoa(encodeURIComponent(current_song._src)), (err, isfavorite) => {
             if (err) throw err;
             btn_favorite.textContent = isfavorite ? 'favorite' : 'favorite_border';
         });
