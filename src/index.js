@@ -34,13 +34,28 @@ const information = {
   click: aboutApplication
 };
 
+const openSearch = {
+  label: 'Search',
+  click: openSearchDialog
+};
+
+
+const switchTheme = {
+  label: 'Theme',
+  click: changeTheme
+};
+
+const mySong = {
+  label: 'My Songs',
+  click: playMySongs
+}
 /* ---------------------  Initialize  ------------------------- */
 
 /* ---------------------Event listeners------------------------ */
 
 app.on('ready', () =>{
   createWindow();
-  SetMenu(openFolder,information);
+  SetMenu(openFolder,mySong,openSearch,switchTheme,information);
 })
 
 .on('activate', () => {
@@ -51,8 +66,8 @@ app.on('ready', () =>{
 
 /* ----------------------- Functions -------------------------- */
 
-function SetMenu(openFolder,information) {
-  const menu = Menu.buildFromTemplate([openFolder,information]);
+function SetMenu(openFolder, Mysong, openSearch, switchTheme, information) {
+  const menu = Menu.buildFromTemplate([openFolder, Mysong, openSearch, switchTheme, information]);
   Menu.setApplicationMenu(menu);
 }
 
@@ -100,6 +115,18 @@ function walkSync(dir, filelist=[]) {
   return filelist;
 }
 
+function openSearchDialog() {
+  mainWindow.webContents.send('search');
+}
+
+function changeTheme() {
+
+}
+
+function playMySongs() {
+  mainWindow.webContents.send('mysongs');
+}
+
 function aboutApplication() {
   openAboutWindow({
     icon_path: path.join(__dirname, '../Assets/Electunes.png'),
@@ -114,7 +141,7 @@ function aboutApplication() {
 
 function play(filelist) {
   mainWindow.webContents.send('start', filelist.reduce((json, value, key) => {
-    json[key] = value; 
+    json[key] = value;
     return json;
   }, {}));
 }

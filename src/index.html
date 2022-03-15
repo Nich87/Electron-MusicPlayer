@@ -23,7 +23,7 @@
         <a class="btn-flat btn-small waves-effect waves-light" id="btn_forward"><i class="material-icons">forward_10</i></a>
       </div>
       <div class="sub_Controler">
-        <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">favorite_border</i></a>
+        <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons" id="btn_favorite">favorite_border</i></a>
         <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">repeat</i></a>
         <a class="btn-flat btn-small waves-effect waves-light" id="btn_shuffle"><i class="material-icons">shuffle</i></a>
         <input type="range" id="volume" min="0" max="100">
@@ -38,6 +38,8 @@
     <ul class="collection" id="metadata">
     </ul>
   </div>
+
+  <div id="search"></div>
   <!-- Load Scripts -->
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script type="text/javascript" src="js/app.js"></script>

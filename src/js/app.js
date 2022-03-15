@@ -7,6 +7,7 @@
     const btn_previous = document.getElementById('btn_previous');
     const btn_forward = document.getElementById('btn_forward');
     const btn_replay = document.getElementById('btn_replay');
+    const btn_favorite = document.getElementById('btn_favorite');
     const btn_shuffle = document.getElementById('btn_shuffle');
     const btn_play_inner = btn_play.getElementsByTagName('i')[0];
     const current_time_text = document.getElementById('current');
@@ -15,9 +16,11 @@
     const volume = document.getElementById('volume');
     const collection = document.getElementById('Music_list');
     const meta = document.getElementById('metadata');
+    const search = document.getElementById('search');
+
 
     // Local variables
-    let current_song, list, g_volume = 0.5;
+    let current_song, list, g_volume = 0.5, isShowing = false;
 
     // Initialization
     M.AutoInit();
@@ -28,10 +31,51 @@
             list = null;
         }
         filelist = Object.values(filelist);
-        console.log(filelist);
         list = filelist;
         play_next_song();
-    });
+    })
+        .on('mysongs', () => {
+            if (current_song) {
+                current_song.stop();
+                current_song.unload();
+                list = null;
+            }
+            storage.getAll((error, data) => {
+                if (error) throw error;
+                Object.values(data).forEach(el => {
+                    Object.values(el).forEach(el => {
+                        Object.values(el).forEach(value => {
+                            console.log(String(value));
+                            list.push(String(value));
+                            if (list.length === fs.readdirSync(os.homedir() + '/playlist/').length) return play_next_song();
+                        });
+                    });
+                });
+            });
+
+
+
+        })
+    .on('search',() => {
+        if(!isShowing){
+        search.insertAdjacentHTML('beforeend', `
+        <div class="row" id="search">
+        <form class="col s12">
+        <div class="row">
+        <div class="input-field col s12">
+        <textarea id="textarea1" class="materialize-textarea"></textarea>
+        <label for="textarea1">検索ワードを入力してください</label>
+        </div>
+        </div>
+        </form>
+        </div>
+        `);
+        isShowing = true;
+        } else {
+            search.removeChild(search.lastElementChild);
+            isShowing = false;
+        }
+    })
 
     // Register event listeners
     btn_play.addEventListener('click', () => {
@@ -67,6 +111,25 @@
         play_next_song();
     });
 
+    btn_favorite.addEventListener('click', () => {
+        if (!current_song) return;
+        const str = current_song._src;
+
+        storage.has(str, (error, hasKey) => {
+            if (error) throw error;
+            if (hasKey) {
+                storage.remove(str, (error) => {
+                    if (error) throw error;
+                });
+            } else {
+                storage.set(str, { Path: str },(error) => {
+                    if (error) throw error;
+                });
+            }
+        });
+        favorite_load();
+    });
+
     player_progress.addEventListener('input', () => current_song.seek(player_progress.value / 200));
     volume.addEventListener('input', () => {
         current_song.volume(volume.value / 100);
@@ -94,6 +157,7 @@
             onload() {
                 collection_init();
                 meta_parse();
+                favorite_load();
                 const duration = current_song.duration();
                 player_progress.max = duration * 200;
                 duration_time_text.textContent = seconds_to_time(Math.trunc(duration));
@@ -123,16 +187,29 @@
             sampleRate: metadata.format.sampleRate + 'Hz'
         };
         while (meta.lastChild) meta.removeChild(meta.lastChild);
-        let code = `
-        <li class="collection-item" id="title">${metadata.common.title ?? '曲名が設定されていません'}</li>
-        <li class="collection-item" id="artist">${metadata.common.artist ?? 'Unknown'}</li>
-        <li class="collection-item" id="album">${metadata.common.album ?? 'Single'}</li>
-        `;
-        if (info.lossless) code += '<img src="../Assets/hires-logo.png" id="hires">';
-        meta.insertAdjacentHTML('beforeend', code);
         const base64Data = metadata?.common.picture?.[0]?.data?.toString('base64');
         const imageUrl = base64Data ? 'data:image/png;base64,' + base64Data : "../Assets/no_image_square.jpg";
         artwork.src = imageUrl;
+
+        let title = document.createElement('li')
+        title.id = 'title'
+        title.className = 'collection-item'
+        title.textContent = metadata.common.title ?? '曲名が設定されていません';
+
+        let artist = document.createElement('li')
+        artist.id = 'artist'
+        artist.className = 'collection-item'
+        artist.textContent = metadata.common.artist ?? 'Unknown';
+
+        let album = document.createElement('li')
+        album.id = 'album'
+        album.className = 'collection-item'
+        album.textContent = metadata.common.album ?? 'Single';
+
+        meta.appendChild(title);
+        meta.appendChild(artist);
+        meta.appendChild(album);
+        if (info.lossless) meta.insertAdjacentHTML('beforeend', '<img src="../Assets/hires-logo.png" id="hires">');
 
         new Notification(metadata.common.title ?? '曲名が設定されていません', {
             body: metadata.common.artist ?? 'Unknown',
@@ -143,11 +220,11 @@
         client.request('SET_ACTIVITY', {
             pid: process.pid,
             activity: {
-                state: '再生中',
-                details: `${metadata.common.title}`,
+                state: `${metadata.common.artist.slice(0,128) ?? 'Unknown'}`,
+                details: `${metadata.common.title.slice(0, 128) ?? '曲名が設定されていません'}`,
                 assets: {
                     large_image: 'f1c1ac57-07e7-4f99-8007-7dde646b551d',
-                    large_text: "NowPlaying"
+                    large_text: "再生中"
                 },
                 buttons: [
                     { label: 'Download Electunes', url: 'https://github.com/Nich87/Electron-MusicPlayer'},
@@ -164,17 +241,32 @@
         while (collection.lastChild) collection.removeChild(collection.lastChild);
         for (let i = 0; i < Math.min(list.length, 30); i++) {
             const metadata = await mm.parseFile(list[i]);
-            const listCode = `
-            <li class="collection-item avatar">
-            <i class="material-icons circle red">audiotrack</i>
-            <span class="title">${metadata.common.title ?? '曲名が設定されていません'}</span>
-            <p>${metadata.common.artist ?? 'Unknown'}</p>
-            <p>${metadata.common.album ?? 'Single'}</p>
-            </li>
-            `;
-            collection.insertAdjacentHTML('beforeend', listCode);
+            let li = document.createElement('li');
+            li.className = 'collection-item avatar';
+            let i_icon = document.createElement('i');
+            i_icon.className = 'material-icons circle red';
+            i_icon.textContent = 'audiotrack';
+            let span = document.createElement('span');
+            span.className = 'title';
+            span.textContent = metadata.common.title ?? '曲名が設定されていません';
+            let p_artists = document.createElement('p');
+            p_artists.textContent = metadata.common.artist ?? 'Unknown';
+            let p_albums = document.createElement('p');
+            p_albums.textContent = metadata.common.album ?? 'Single';
+            li.appendChild(i_icon);
+            li.appendChild(span);
+            li.appendChild(p_artists);
+            li.appendChild(p_albums);
+            collection.appendChild(li);
             const collection_inner = collection.getElementsByTagName('i')[0];
             collection_inner.textContent = 'play_arrow';
         }
     }
+
+    function favorite_load() {
+        storage.has(current_song._src, (err, isfavorite) => {
+            isfavorite ? btn_favorite.textContent = 'favorite' : btn_favorite.textContent = 'favorite_border';
+        });
+    }
 })();
+

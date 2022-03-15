@@ -28,6 +28,13 @@ body {
   max-width:300px;
 }
 
+.search {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  bottom: 20%;
+  width: 50%;
+}
+
 #player-progress {
   position: fixed;
   bottom: 0;
@@ -107,3 +114,4 @@ body {
     display: none;
   }
 }
+
