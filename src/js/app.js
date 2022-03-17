@@ -2,19 +2,19 @@
 
     // HTML elements
     const player_progress = document.getElementById('player-progress');
-    const btn_play = document.getElementById('btn_play');
-    const btn_skip = document.getElementById('btn_skip');
-    const btn_previous = document.getElementById('btn_previous');
-    const btn_forward = document.getElementById('btn_forward');
-    const btn_replay = document.getElementById('btn_replay');
-    const btn_favorite = document.getElementById('btn_favorite');
-    const btn_shuffle = document.getElementById('btn_shuffle');
+    const btn_play = document.getElementById('button-play');
+    const btn_skip = document.getElementById('button-skip');
+    const btn_previous = document.getElementById('button-previous');
+    const btn_forward = document.getElementById('button-forward');
+    const btn_replay = document.getElementById('button-replay');
+    const btn_favorite = document.getElementById('button-favorite');
+    const btn_shuffle = document.getElementById('button-shuffle');
     const btn_play_inner = btn_play.getElementsByTagName('i')[0];
     const current_time_text = document.getElementById('current');
     const duration_time_text = document.getElementById('duration');
     const artwork = document.getElementById('artwork');
     const volume = document.getElementById('volume');
-    const collection = document.getElementById('Music_list');
+    const collection = document.getElementById('music-list');
     const meta = document.getElementById('metadata');
     const search = document.getElementById('search-box');
     const box = document.getElementById('textarea1');
