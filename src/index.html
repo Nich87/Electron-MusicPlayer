@@ -10,37 +10,49 @@
 </head>
 
 <body>
-  <div id="container">
-    <ul class="collection" id="Music_list"></ul>
-    <div id="player">
-      <div class="Controler">
-        <a class="btn-flat btn-small waves-effect waves-light" id="btn_replay"><i class="material-icons">replay_10</i></a>
-        <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons"
-            id="btn_previous">skip_previous</i></a>
-        <a class="btn-floating btn-small waves-effect waves-light red" id="btn_play"><i
-            class="material-icons">play_arrow</i></a>
-        <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons" id="btn_skip">skip_next</i></a>
-        <a class="btn-flat btn-small waves-effect waves-light" id="btn_forward"><i class="material-icons">forward_10</i></a>
-      </div>
-      <div class="sub_Controler">
-        <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">favorite_border</i></a>
-        <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">repeat</i></a>
-        <a class="btn-flat btn-small waves-effect waves-light" id="btn_shuffle"><i class="material-icons">shuffle</i></a>
-        <input type="range" id="volume" min="0" max="100">
-      </div>
-      <div>
-        <input type="range" id="player-progress" min="0" max="100" />
-        <em id="current">00:00</em>
-        <em id="duration">00:00</em>
-      </div>
+  <ul class="collection" id="music-list"></ul>
+  <article id="player">
+    <input type="range" id="volume" min="0" max="100">
+    <div class="controler">
+      <a class="btn-flat btn-small waves-effect waves-light" id="button-replay"><i
+          class="material-icons">replay_10</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons"
+          id="button-previous">skip_previous</i></a>
+      <a class="btn-floating btn-small waves-effect waves-light red" id="button-play"><i
+          class="material-icons">play_arrow</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons"
+          id="button-skip">skip_next</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light" id="button-forward"><i
+          class="material-icons">forward_10</i></a>
     </div>
+    <div class="sub-controler">
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons"
+          id="button-favorite">favorite_border</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light"><i class="material-icons">repeat</i></a>
+      <a class="btn-flat btn-small waves-effect waves-light" id="button-shuffle"><i
+          class="material-icons">shuffle</i></a>
+    </div>
+  </article>
+  <article id="progress-wrapper">
+    <input type="range" id="player-progress" min="0" max="100" />
+    <div>
+      <em id="current">00:00</em>
+      <em id="duration">00:00</em>
+    </div>
+  </article>
+  <article id="nowplaying">
     <img class="responsive-img" src="" id="artwork">
-    <ul class="collection" id="metadata">
+    <ul class="collection" id="metadata" style="display:none">
+      <li id="title" class="collection-item"></li>
+      <li id="artist" class="collection-item"></li>
+      <li id="album" class="collection-item"></li>
+      <img src="../Assets/hires-logo.png" id="hires">
     </ul>
-  </div>
+  </article>
   <!-- Load Scripts -->
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
   <!------------------>
 </body>
+
 </html>

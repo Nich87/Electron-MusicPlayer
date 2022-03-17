@@ -1,55 +1,34 @@
 {
   "name": "electron-musicplayer",
   "productName": "Electunes",
-  "version": "1.0.0-rc2",
+  "version": "1.0.0-rc3",
   "description": "Simple MusicPlayer",
   "main": "src/index.js",
   "scripts": {
     "start": "chcp 65001 && electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "make": "npx electron-builder --win --x64 --dir",
+    "package": "npx electron-builder --win --x64"
   },
-  "keywords": ["Electron","MusicPlayer"],
+  "keywords": [
+    "Electron",
+    "MusicPlayer"
+  ],
   "author": {
     "name": "Nich87"
   },
   "license": "MIT",
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "Assets/Electunes.ico"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "myapp"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
+  "build": {
+    "win": {
+      "icon": "Assets/Electunes.ico"
     }
   },
   "dependencies": {
     "about-window": "^1.15.2",
+    "discord-rpc": "^4.0.1",
+    "electron-json-storage": "^4.5.0",
     "electron-squirrel-startup": "^1.0.0",
     "howler": "^2.2.3",
-    "music-metadata": "^7.11.8"
+    "music-metadata": "^7.12.2"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.63",

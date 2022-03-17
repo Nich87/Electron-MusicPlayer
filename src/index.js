@@ -10,19 +10,19 @@ const fs = require('fs');
 /* ---------------------  Initialize   -------------------------*/
 let mainWindow;
 
-const createWindow = () => {
+function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1400,
     height: 1080,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
       preload: path.join(__dirname, './js/preload.js'),
       contextIsolation: false
     }
   });
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
   if (config.debug) mainWindow.webContents.openDevTools();
-};
+}
 
 const openFolder = {
   label: 'Open Folder',
@@ -34,13 +34,27 @@ const information = {
   click: aboutApplication
 };
 
+const openSearch = {
+  label: 'Search',
+  click: openSearchDialog
+};
+
+const switchTheme = {
+  label: 'Theme',
+  click: changeTheme
+};
+
+const mySong = {
+  label: 'My Songs',
+  click: playMySongs
+};
 /* ---------------------  Initialize  ------------------------- */
 
 /* ---------------------Event listeners------------------------ */
 
-app.on('ready', () =>{
+app.on('ready', () => {
   createWindow();
-  SetMenu(openFolder,information);
+  SetMenu();
 })
 
 .on('activate', () => {
@@ -51,11 +65,10 @@ app.on('ready', () =>{
 
 /* ----------------------- Functions -------------------------- */
 
-function SetMenu(openFolder,information) {
-  const menu = Menu.buildFromTemplate([openFolder,information]);
+function SetMenu() {
+  const menu = Menu.buildFromTemplate([openFolder, mySong, openSearch, switchTheme, information]);
   Menu.setApplicationMenu(menu);
 }
-
 
 function openFolderDialog() {
   dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }).then(
@@ -70,19 +83,15 @@ function openFolderDialog() {
 }
 
 function scanDir(filePath) {
-  if(!filePath || filePath[0] === 'undefined') return;
-  const filelist = walkSync(filePath);
-  play(filelist);
+  if (!filePath || filePath[0] === 'undefined') return;
+  mainWindow.webContents.send('start', walkSync(filePath));
 }
 
-function walkSync(dir, filelist=[]) {
-  const files = fs.readdirSync(dir,'utf8');
+function walkSync(dir, filelist = []) {
+  const files = fs.readdirSync(dir, 'utf8');
   files.forEach((file) => {
     const filepath = path.join(dir, file);
-    if (fs.statSync(filepath).isDirectory()) {
-      walkSync(filepath, filelist);
-      return;
-    }
+    if (fs.statSync(filepath).isDirectory()) return walkSync(filepath, filelist);
     if (
       file.endsWith('.mp3') ||
       file.endsWith('.wav') ||
@@ -93,11 +102,21 @@ function walkSync(dir, filelist=[]) {
       file.endsWith('.wma') ||
       file.endsWith('.alac') ||
       file.endsWith('.webm')
-    ) {
-      filelist.push(filepath);
-    }
+    ) filelist.push(filepath);
   });
   return filelist;
+}
+
+function openSearchDialog() {
+  mainWindow.webContents.send('search');
+}
+
+function changeTheme() {
+
+}
+
+function playMySongs() {
+  mainWindow.webContents.send('mysongs');
 }
 
 function aboutApplication() {
@@ -107,15 +126,8 @@ function aboutApplication() {
     homepage: 'https://github.com/Nich87/Electron-MusicPlayer',
     copyright: 'By Nich87',
     description: 'Simple Electron Music Player',
-    license: 'MIT',
+    license: 'MIT'
   });
 }
 
-
-function play(filelist) {
-  mainWindow.webContents.send('start', filelist.reduce((json, value, key) => {
-    json[key] = value; 
-    return json;
-  }, {}));
-}
 /* ----------------------- Functions -------------------------- */

@@ -1,68 +1,67 @@
 body {
-  margin: auto;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   -webkit-user-select: none;
 }
 
-.player {
-  position:fixed;
-  bottom:0;
-  max-height: 20%;
-}
-
-.Controler {
-  position: fixed;
-  bottom: 0;
-  transform: translate(-50%, -50%);
+#player .controler {
+  position: absolute;
+  bottom: 2%;
   left: 50%;
-  display: flex;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
 }
 
-.sub_Controler {
-  position: fixed;
-  bottom: 0;
-  transform: translate(-50%, -50%);
-  left: 85%;
-  top: 98%;
-  height: 200px;
-  max-width:300px;
+#player .sub-controler {
+  position: absolute;
+  right: 5%;
+  bottom: 2%;
 }
 
-#player-progress {
-  position: fixed;
-  bottom: 0;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 85%;
-  height: 1px;
-  display: flex;
+#player #volume {
+  position: absolute;
+  bottom: 2%;
+  left: 5%;
+  width: 15%;
 }
 
-#current {
+#progress-wrapper #player-progress {
+  position: absolute;
+  bottom: 5%;
+  width: 100%;
+}
+
+#progress-wrapper #current {
   position: absolute;
   bottom: 0;
+  left: 0;
 }
-#duration {
+
+#progress-wrapper #duration {
   position: absolute;
   bottom: 0;
   right: 0;
+}
+
+#music-list {
+  position: absolute;
+  right: 0;
+  top: 0;
+  max-height: 92%;
+  width: 30%;
+  overflow: auto;
 }
 
 #artwork {
-  margin-top: 50px;
-  margin-left: 50px;
-  max-width: 50%;
-  max-height: 600px;
+  margin-top: 3%;
+  margin-left: 3%;
+  max-width: 30%;
+  max-height: 50%;
+  object-fit: cover;
 }
 
-#Music_list {
-  position:fixed;
-  max-width: 100%;
-  max-height:85%;
-  right: 0;
-  margin: 0 0 0 auto;
-  width: 30%;
-  overflow: auto;
+#metadata {
+  margin-left: 3%;
+  max-width: 30%;
 }
 
 #hires {
@@ -70,40 +69,10 @@ body {
   max-height: 10%;
 }
 
-#metadata {
-  position:absolute;
-  margin-left: 50px;
-  max-width: 600px;
-  width: 50%;
-}
-
-@media screen and ( max-width:350px ) {
-  #artwork {
-    margin-top: 50px;
-    margin-left: 50px;
-    max-width: 50%;
-    max-height: 100px;
-  }
-}
-
- @media screen and ( max-height:300px ) {
-   #metadata{
-     display: none;
-   }
- }
-
-  @media screen and ( max-width:650px ) {
-  #artwork {
-  width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-  }
-
-  #Music_list {
-    display: none;
-  }
-
-  .sub_Controler {
-    display: none;
-  }
+#search {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
 }
