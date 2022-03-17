@@ -2,19 +2,19 @@
 
     // HTML elements
     const player_progress = document.getElementById('player-progress');
-    const btn_play = document.getElementById('btn_play');
-    const btn_skip = document.getElementById('btn_skip');
-    const btn_previous = document.getElementById('btn_previous');
-    const btn_forward = document.getElementById('btn_forward');
-    const btn_replay = document.getElementById('btn_replay');
-    const btn_favorite = document.getElementById('btn_favorite');
-    const btn_shuffle = document.getElementById('btn_shuffle');
+    const btn_play = document.getElementById('button-play');
+    const btn_skip = document.getElementById('button-skip');
+    const btn_previous = document.getElementById('button-previous');
+    const btn_forward = document.getElementById('button-forward');
+    const btn_replay = document.getElementById('button-replay');
+    const btn_favorite = document.getElementById('button-favorite');
+    const btn_shuffle = document.getElementById('button-shuffle');
     const btn_play_inner = btn_play.getElementsByTagName('i')[0];
     const current_time_text = document.getElementById('current');
     const duration_time_text = document.getElementById('duration');
     const artwork = document.getElementById('artwork');
     const volume = document.getElementById('volume');
-    const collection = document.getElementById('Music_list');
+    const collection = document.getElementById('music-list');
     const meta = document.getElementById('metadata');
     const search = document.getElementById('search-box');
     const box = document.getElementById('textarea1');
@@ -25,21 +25,20 @@
     const album = document.getElementById('album');
     const hires = document.getElementById('hires');
 
-
     // Local variables
     let current_song, list = [], g_volume = 0.5;
 
     // Initialization
     M.AutoInit();
     ipcRenderer.on('start', (_args, filelist) => {
-        if(current_song) {
+        if (current_song) {
             current_song.stop();
             current_song.unload();
         }
-        list = Object.values(filelist);
+        list = filelist;
         collection_init();
         play_next_song();
-    })
+    });
     ipcRenderer.on('mysongs', () => {
         if (current_song) {
             current_song.stop();
@@ -60,7 +59,7 @@
             play_next_song();
         });
     })
-    .on('search',() => {
+    .on('search', () => {
         search.style.display = search.style.display === 'none' ? '' : 'none';
     });
 
@@ -107,13 +106,13 @@
         let pre = [];
         for (const song of list) {
             if (song.split('\\').pop().toLowerCase().indexOf(str) !== -1) {
-                console.warn(song)
+                console.warn(song);
                 pre.push(song);
             }
         }
         res.textContent = pre.length;
 
-        while (results.firstChild) results.removeChild(results.firstChild);
+        results.textContent = '';
         for (let i = 0; i < pre.length; i++) {
             const li = document.createElement('li');
             li.textContent = pre[i].split('\\').pop();
@@ -146,8 +145,6 @@
         g_volume = volume.value / 100;
     });
 
-
-
     // Register interval
     setInterval(() => {
         if (!current_song?.playing()) return;
@@ -179,7 +176,7 @@
                 play_next_song();
             },
             onplay: () => btn_play_inner.textContent = 'pause',
-            onpause: () => btn_play_inner.textContent = 'play_arrow',
+            onpause: () => btn_play_inner.textContent = 'play_arrow'
         });
     }
 
@@ -199,7 +196,7 @@
         };
         meta.style.display = '';
         const base64Data = metadata?.common.picture?.[0]?.data?.toString('base64');
-        const imageUrl = base64Data ? 'data:image/png;base64,' + base64Data : "../Assets/no_image_square.jpg";
+        const imageUrl = base64Data ? 'data:image/png;base64,' + base64Data : '../Assets/no_image_square.jpg';
         artwork.src = imageUrl;
 
         title.textContent = metadata.common.title ?? '曲名が設定されていません';
@@ -220,14 +217,14 @@
                 details: `${metadata.common.title?.slice(0, 128) ?? '曲名が設定されていません'}`,
                 assets: {
                     large_image: 'f1c1ac57-07e7-4f99-8007-7dde646b551d',
-                    large_text: "再生中"
+                    large_text: '再生中'
                 },
                 buttons: [
-                    { label: 'Download Electunes', url: 'https://github.com/Nich87/Electron-MusicPlayer'},
-                    { label: 'Developer', url:'https://twitter.com/const_root'},
+                    { label: 'Download Electunes', url: 'https://github.com/Nich87/Electron-MusicPlayer' },
+                    { label: 'Developer', url: 'https://twitter.com/const_root' }
                 ],
                 timestamps: {
-                    start: Date.now(),
+                    start: Date.now()
                 }
             }
         });
@@ -290,4 +287,3 @@
         collection.prepend(last_element);
     }
 })();
-

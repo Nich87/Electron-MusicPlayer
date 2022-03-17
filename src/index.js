@@ -10,7 +10,7 @@ const fs = require('fs');
 /* ---------------------  Initialize   -------------------------*/
 let mainWindow;
 
-const createWindow = () => {
+function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1400,
     height: 1080,
@@ -22,7 +22,7 @@ const createWindow = () => {
   });
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
   if (config.debug) mainWindow.webContents.openDevTools();
-};
+}
 
 const openFolder = {
   label: 'Open Folder',
@@ -39,7 +39,6 @@ const openSearch = {
   click: openSearchDialog
 };
 
-
 const switchTheme = {
   label: 'Theme',
   click: changeTheme
@@ -48,12 +47,12 @@ const switchTheme = {
 const mySong = {
   label: 'My Songs',
   click: playMySongs
-}
+};
 /* ---------------------  Initialize  ------------------------- */
 
 /* ---------------------Event listeners------------------------ */
 
-app.on('ready', () =>{
+app.on('ready', () => {
   createWindow();
   SetMenu();
 })
@@ -71,7 +70,6 @@ function SetMenu() {
   Menu.setApplicationMenu(menu);
 }
 
-
 function openFolderDialog() {
   dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }).then(
     (result) => {
@@ -85,12 +83,12 @@ function openFolderDialog() {
 }
 
 function scanDir(filePath) {
-  if(!filePath || filePath[0] === 'undefined') return;
+  if (!filePath || filePath[0] === 'undefined') return;
   mainWindow.webContents.send('start', walkSync(filePath));
 }
 
-function walkSync(dir, filelist=[]) {
-  const files = fs.readdirSync(dir,'utf8');
+function walkSync(dir, filelist = []) {
+  const files = fs.readdirSync(dir, 'utf8');
   files.forEach((file) => {
     const filepath = path.join(dir, file);
     if (fs.statSync(filepath).isDirectory()) return walkSync(filepath, filelist);
@@ -128,7 +126,7 @@ function aboutApplication() {
     homepage: 'https://github.com/Nich87/Electron-MusicPlayer',
     copyright: 'By Nich87',
     description: 'Simple Electron Music Player',
-    license: 'MIT',
+    license: 'MIT'
   });
 }
 

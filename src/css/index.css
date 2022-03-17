@@ -1,18 +1,17 @@
-
 body {
   background-color: #ffffff;
   -webkit-user-select: none;
 }
 
-#player .Controler {
+#player .controler {
   position: absolute;
   bottom: 2%;
-  left:50%;
+  left: 50%;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
 }
 
-#player .sub_Controler {
+#player .sub-controler {
   position: absolute;
   right: 5%;
   bottom: 2%;
@@ -22,13 +21,13 @@ body {
   position: absolute;
   bottom: 2%;
   left: 5%;
-  width:15%;
+  width: 15%;
 }
 
 #progress-wrapper #player-progress {
   position: absolute;
   bottom: 5%;
-  width:100%;
+  width: 100%;
 }
 
 #progress-wrapper #current {
@@ -43,11 +42,11 @@ body {
   right: 0;
 }
 
-#Music_list {
+#music-list {
   position: absolute;
   right: 0;
   top: 0;
-  max-height:85%;
+  max-height: 85%;
   width: 30%;
   overflow: auto;
 }
