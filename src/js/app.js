@@ -112,7 +112,7 @@
         }
         res.textContent = pre.length;
 
-        while (results.firstChild) results.removeChild(results.firstChild);
+        results.textContent = '';
         for (let i = 0; i < pre.length; i++) {
             const li = document.createElement('li');
             li.textContent = pre[i].split('\\').pop();
