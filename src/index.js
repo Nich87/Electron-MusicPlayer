@@ -67,7 +67,7 @@ app.on('ready', () =>{
 /* ----------------------- Functions -------------------------- */
 
 function SetMenu() {
-  const menu = Menu.buildFromTemplate([openFolder, Mysong, openSearch, switchTheme, information]);
+  const menu = Menu.buildFromTemplate([openFolder, mySong, openSearch, switchTheme, information]);
   Menu.setApplicationMenu(menu);
 }
 
