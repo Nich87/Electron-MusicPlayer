@@ -46,7 +46,7 @@ body {
   position: absolute;
   right: 0;
   top: 0;
-  max-height: 85%;
+  max-height: 92%;
   width: 30%;
   overflow: auto;
 }
@@ -67,4 +67,12 @@ body {
 #hires {
   max-width: 10%;
   max-height: 10%;
+}
+
+#search {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
 }

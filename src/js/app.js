@@ -16,10 +16,6 @@
     const volume = document.getElementById('volume');
     const collection = document.getElementById('music-list');
     const meta = document.getElementById('metadata');
-    const search = document.getElementById('search-box');
-    const box = document.getElementById('textarea1');
-    const res = document.getElementById('res-value');
-    const results = document.getElementById('results');
     const title = document.getElementById('title');
     const artist = document.getElementById('artist');
     const album = document.getElementById('album');
@@ -58,9 +54,6 @@
             collection_init();
             play_next_song();
         });
-    })
-    .on('search', () => {
-        search.style.display = search.style.display === 'none' ? '' : 'none';
     });
 
     // Register event listeners
@@ -98,26 +91,6 @@
         list = random(list);
         collection_init();
         play_next_song();
-    });
-
-    box.addEventListener('input', () => {
-        if (!current_song) return;
-        const str = box.value.toLowerCase();
-        let pre = [];
-        for (const song of list) {
-            if (song.split('\\').pop().toLowerCase().indexOf(str) !== -1) {
-                console.warn(song);
-                pre.push(song);
-            }
-        }
-        res.textContent = pre.length;
-
-        results.textContent = '';
-        for (let i = 0; i < pre.length; i++) {
-            const li = document.createElement('li');
-            li.textContent = pre[i].split('\\').pop();
-            results.appendChild(li);
-        }
     });
 
     btn_favorite.addEventListener('click', () => {
