@@ -17,6 +17,9 @@
     const collection = document.getElementById('Music_list');
     const meta = document.getElementById('metadata');
     const search = document.getElementById('search-box');
+    const box = document.getElementById('textarea1');
+    const res = document.getElementById('res-value');
+    const results = document.getElementById('results');
     const title = document.getElementById('title');
     const artist = document.getElementById('artist');
     const album = document.getElementById('album');
@@ -98,6 +101,26 @@
         play_next_song();
     });
 
+    box.addEventListener('input', () => {
+        if (!current_song) return;
+        const str = box.value.toLowerCase();
+        let pre = [];
+        for (const song of list) {
+            if (song.split('\\').pop().toLowerCase().indexOf(str) !== -1) {
+                console.warn(song)
+                pre.push(song);
+            }
+        }
+        res.textContent = pre.length;
+
+        while (results.firstChild) results.removeChild(results.firstChild);
+        for (let i = 0; i < pre.length; i++) {
+            const li = document.createElement('li');
+            li.textContent = pre[i].split('\\').pop();
+            results.appendChild(li);
+        }
+    });
+
     btn_favorite.addEventListener('click', () => {
         if (!current_song) return;
         const str = btoa(encodeURIComponent(current_song._src));
@@ -139,7 +162,6 @@
         if (!list.length) return;
         current_song = new Howl({
             src: list[0],
-            format: ['mp3', 'wav', 'flac', 'ogg', 'acc', 'm4a', 'wma', 'alac', 'webm', 'dolby'],
             autoplay: true,
             html5: true,
             volume: g_volume,
@@ -183,7 +205,7 @@
         title.textContent = metadata.common.title ?? '曲名が設定されていません';
         artist.textContent = metadata.common.artist ?? 'Unknown';
         album.textContent = metadata.common.album ?? 'Single';
-        hires.style.display = info.lossless ? '' : 'none'; 
+        hires.style.display = info.lossless ? '' : 'none';
 
         new Notification(metadata.common.title ?? '曲名が設定されていません', {
             body: metadata.common.artist ?? 'Unknown',
@@ -249,7 +271,7 @@
         element_inner.textContent = 'audiotrack';
         collection.removeChild(element);
         collection.append(element);
-      
+
         const next_element = collection.firstElementChild;
         const next_element_inner = next_element.getElementsByTagName('i')[0];
         next_element_inner.textContent = 'play_arrow';

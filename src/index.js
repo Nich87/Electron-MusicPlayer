@@ -55,7 +55,7 @@ const mySong = {
 
 app.on('ready', () =>{
   createWindow();
-  SetMenu(openFolder,mySong,openSearch,switchTheme,information);
+  SetMenu();
 })
 
 .on('activate', () => {
@@ -66,7 +66,7 @@ app.on('ready', () =>{
 
 /* ----------------------- Functions -------------------------- */
 
-function SetMenu(openFolder, Mysong, openSearch, switchTheme, information) {
+function SetMenu() {
   const menu = Menu.buildFromTemplate([openFolder, Mysong, openSearch, switchTheme, information]);
   Menu.setApplicationMenu(menu);
 }
@@ -86,18 +86,14 @@ function openFolderDialog() {
 
 function scanDir(filePath) {
   if(!filePath || filePath[0] === 'undefined') return;
-  const filelist = walkSync(filePath);
-  play(filelist);
+  mainWindow.webContents.send('start', walkSync(filePath));
 }
 
 function walkSync(dir, filelist=[]) {
   const files = fs.readdirSync(dir,'utf8');
   files.forEach((file) => {
     const filepath = path.join(dir, file);
-    if (fs.statSync(filepath).isDirectory()) {
-      walkSync(filepath, filelist);
-      return;
-    }
+    if (fs.statSync(filepath).isDirectory()) return walkSync(filepath, filelist);
     if (
       file.endsWith('.mp3') ||
       file.endsWith('.wav') ||
@@ -108,9 +104,7 @@ function walkSync(dir, filelist=[]) {
       file.endsWith('.wma') ||
       file.endsWith('.alac') ||
       file.endsWith('.webm')
-    ) {
-      filelist.push(filepath);
-    }
+    ) filelist.push(filepath);
   });
   return filelist;
 }
@@ -138,11 +132,4 @@ function aboutApplication() {
   });
 }
 
-
-function play(filelist) {
-  mainWindow.webContents.send('start', filelist.reduce((json, value, key) => {
-    json[key] = value;
-    return json;
-  }, {}));
-}
 /* ----------------------- Functions -------------------------- */
