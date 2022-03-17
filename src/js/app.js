@@ -25,21 +25,20 @@
     const album = document.getElementById('album');
     const hires = document.getElementById('hires');
 
-
     // Local variables
     let current_song, list = [], g_volume = 0.5;
 
     // Initialization
     M.AutoInit();
     ipcRenderer.on('start', (_args, filelist) => {
-        if(current_song) {
+        if (current_song) {
             current_song.stop();
             current_song.unload();
         }
-        list = Object.values(filelist);
+        list = filelist;
         collection_init();
         play_next_song();
-    })
+    });
     ipcRenderer.on('mysongs', () => {
         if (current_song) {
             current_song.stop();
@@ -60,7 +59,7 @@
             play_next_song();
         });
     })
-    .on('search',() => {
+    .on('search', () => {
         search.style.display = search.style.display === 'none' ? '' : 'none';
     });
 
@@ -107,7 +106,7 @@
         let pre = [];
         for (const song of list) {
             if (song.split('\\').pop().toLowerCase().indexOf(str) !== -1) {
-                console.warn(song)
+                console.warn(song);
                 pre.push(song);
             }
         }
@@ -146,8 +145,6 @@
         g_volume = volume.value / 100;
     });
 
-
-
     // Register interval
     setInterval(() => {
         if (!current_song?.playing()) return;
@@ -179,7 +176,7 @@
                 play_next_song();
             },
             onplay: () => btn_play_inner.textContent = 'pause',
-            onpause: () => btn_play_inner.textContent = 'play_arrow',
+            onpause: () => btn_play_inner.textContent = 'play_arrow'
         });
     }
 
@@ -199,7 +196,7 @@
         };
         meta.style.display = '';
         const base64Data = metadata?.common.picture?.[0]?.data?.toString('base64');
-        const imageUrl = base64Data ? 'data:image/png;base64,' + base64Data : "../Assets/no_image_square.jpg";
+        const imageUrl = base64Data ? 'data:image/png;base64,' + base64Data : '../Assets/no_image_square.jpg';
         artwork.src = imageUrl;
 
         title.textContent = metadata.common.title ?? '曲名が設定されていません';
@@ -220,14 +217,14 @@
                 details: `${metadata.common.title?.slice(0, 128) ?? '曲名が設定されていません'}`,
                 assets: {
                     large_image: 'f1c1ac57-07e7-4f99-8007-7dde646b551d',
-                    large_text: "再生中"
+                    large_text: '再生中'
                 },
                 buttons: [
-                    { label: 'Download Electunes', url: 'https://github.com/Nich87/Electron-MusicPlayer'},
-                    { label: 'Developer', url:'https://twitter.com/const_root'},
+                    { label: 'Download Electunes', url: 'https://github.com/Nich87/Electron-MusicPlayer' },
+                    { label: 'Developer', url: 'https://twitter.com/const_root' }
                 ],
                 timestamps: {
-                    start: Date.now(),
+                    start: Date.now()
                 }
             }
         });
@@ -290,4 +287,3 @@
         collection.prepend(last_element);
     }
 })();
-
