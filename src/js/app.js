@@ -26,7 +26,10 @@
     const hires = document.getElementById('hires');
 
     // Local variables
-    let current_song, list = [], g_volume = 0.5;
+    let current_song,
+        list = [],
+        g_volume = 0.5,
+        counter = 0;
 
     // Initialization
     M.AutoInit();
@@ -35,6 +38,7 @@
             current_song.stop();
             current_song.unload();
         }
+        counter = 0;
         list = filelist;
         collection_init();
         play_next_song();
@@ -55,6 +59,7 @@
                     list.push(decodeURIComponent(atob(value)));
                 });
             });
+            counter = 0;
             collection_init();
             play_next_song();
         });
@@ -74,6 +79,7 @@
         update_collection_next();
         current_song.stop();
         current_song.unload();
+        counter++;
         play_next_song();
     });
 
@@ -82,6 +88,7 @@
         update_collection_prev();
         current_song.stop();
         current_song.unload();
+        counter--;
         play_next_song();
     });
 
@@ -96,6 +103,7 @@
     btn_shuffle.addEventListener('click', () => {
         current_song.unload();
         list = random(list);
+        counter = 0;
         collection_init();
         play_next_song();
     });
@@ -157,10 +165,17 @@
     // Functions
     function play_next_song() {
         if (!list.length) return;
+        if (counter == 20) {
+            counter = 0;
+            while (collection.firstChild) collection.removeChild(collection.firstChild);
+            collection_init();
+            update_collection_next();
+        }
         current_song = new Howl({
             src: list[0],
             autoplay: true,
             html5: true,
+            preload: true,
             volume: g_volume,
             onload() {
                 meta_parse();
@@ -173,6 +188,7 @@
                 current_song.unload();
                 list.push(list.shift());
                 update_collection_next();
+                counter++;
                 play_next_song();
             },
             onplay: () => btn_play_inner.textContent = 'pause',
