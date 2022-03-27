@@ -8,6 +8,7 @@ const fs = require('fs');
 /* ---------------------Module import-------------------------- */
 
 /* ---------------------  Initialize   -------------------------*/
+const exts = ['mp3', 'wav', 'flac', 'ogg', 'aac', 'm4a', 'wma', 'alac', 'webm']
 let mainWindow;
 
 function createWindow() {
@@ -92,17 +93,8 @@ function walkSync(dir, filelist = []) {
   files.forEach((file) => {
     const filepath = path.join(dir, file);
     if (fs.statSync(filepath).isDirectory()) return walkSync(filepath, filelist);
-    if (
-      file.endsWith('.mp3') ||
-      file.endsWith('.wav') ||
-      file.endsWith('.flac') ||
-      file.endsWith('.ogg') ||
-      file.endsWith('.aac') ||
-      file.endsWith('.m4a') ||
-      file.endsWith('.wma') ||
-      file.endsWith('.alac') ||
-      file.endsWith('.webm')
-    ) filelist.push(filepath);
+    const ext = file.slice(file.lastIndexOf('.'));
+    if (exts.includes(ext)) filelist.push(filepath);
   });
   return filelist;
 }
