@@ -93,7 +93,7 @@ function walkSync(dir, filelist = []) {
   files.forEach((file) => {
     const filepath = path.join(dir, file);
     if (fs.statSync(filepath).isDirectory()) return walkSync(filepath, filelist);
-    const ext = file.slice(file.lastIndexOf('.'));
+    const ext = file.slice(file.lastIndexOf('.') + 1);
     if (exts.includes(ext)) filelist.push(filepath);
   });
   return filelist;
