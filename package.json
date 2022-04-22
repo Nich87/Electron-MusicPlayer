@@ -28,7 +28,7 @@
     "electron-json-storage": "^4.5.0",
     "electron-squirrel-startup": "^1.0.0",
     "howler": "^2.2.3",
-    "music-metadata": "^7.12.2"
+    "music-metadata": "^7.12.3"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.63",
@@ -36,7 +36,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.63",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
     "@electron-forge/maker-zip": "^6.0.0-beta.63",
-    "electron": "17.0.0",
-    "electron-builder": "^22.14.5"
+    "electron": "18.1.0",
+    "electron-builder": "^23.0.3"
   }
 }
