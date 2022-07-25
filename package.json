@@ -1,7 +1,7 @@
 {
   "name": "electron-musicplayer",
   "productName": "Electunes",
-  "version": "1.0.0-rc3",
+  "version": "1.0.0-rc4",
   "description": "Simple MusicPlayer",
   "main": "src/index.js",
   "scripts": {
@@ -26,17 +26,18 @@
     "about-window": "^1.15.2",
     "discord-rpc": "^4.0.1",
     "electron-json-storage": "^4.5.0",
+    "electron-reload": "*",
     "electron-squirrel-startup": "^1.0.0",
     "howler": "^2.2.3",
-    "music-metadata": "^7.12.2"
+    "music-metadata": "^7.12.5"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.63",
-    "@electron-forge/maker-deb": "^6.0.0-beta.63",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
-    "@electron-forge/maker-zip": "^6.0.0-beta.63",
-    "electron": "17.0.0",
-    "electron-builder": "^22.14.5"
+    "@electron-forge/cli": "^6.0.0-beta.64",
+    "@electron-forge/maker-deb": "^6.0.0-beta.64",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.64",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.64",
+    "@electron-forge/maker-zip": "^6.0.0-beta.64",
+    "electron": "19.0.9",
+    "electron-builder": "^23.1.0"
   }
 }

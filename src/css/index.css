@@ -1,78 +1,88 @@
 body {
   background-color: #ffffff;
   -webkit-user-select: none;
+  margin: 0;
+  padding: 0;
 }
 
-#player .controler {
-  position: absolute;
-  bottom: 2%;
-  left: 50%;
-  transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
+body::-webkit-scrollbar {
+  display: none;
+}
+.art-wrapper {
+  width: 50%;
+  height:50%;
+  padding-right:20%;
 }
 
-#player .sub-controler {
-  position: absolute;
-  right: 5%;
-  bottom: 2%;
+.artwork  {
+  border-radius: 31px;
+  background: #c4effd;
+  box-shadow: 36px 36px 72px #91b1bb,
+    -36px -36px 72px #f7ffff;
+    max-width: 100%;
+    height: auto;
+    width: auto;
 }
 
-#player #volume {
-  position: absolute;
-  bottom: 2%;
-  left: 5%;
-  width: 15%;
+.metadata-wrapper {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin-top:13%;
 }
 
-#progress-wrapper #player-progress {
-  position: absolute;
-  bottom: 5%;
+.Controller-wrapper {
+  height: 15%;
   width: 100%;
-}
-
-#progress-wrapper #current {
   position: absolute;
   bottom: 0;
-  left: 0;
+
+
+  background: #c4effd;
+  box-shadow: 35px 35px 53px #91b1bb,
+    -35px -35px 53px #f7ffff;
 }
 
-#progress-wrapper #duration {
-  position: absolute;
-  bottom: 0;
-  right: 0;
+.controler {
+  display: flex;
+  justify-content: center;
 }
 
-#music-list {
-  position: absolute;
-  right: 0;
-  top: 0;
-  max-height: 92%;
+.fa-solid {
+  margin: 1%;
+  transition-duration: .2s;
+}
+
+.fa-solid:hover {
+  transform: translateY(-3px);
+  transform: scale(1.1);
+}
+
+.input-range[type="range"] {
+  appearance: none;
+  background-color: rgba(255, 255, 255, .7);
   width: 30%;
-  overflow: auto;
+  border-radius: 6px;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    cursor: pointer;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    display: block;
+    border: 1px solid #717171;
+    background-color: #fff;
+    border-radius: 50%;
+  }
 }
 
-#artwork {
-  margin-top: 3%;
-  margin-left: 3%;
-  max-width: 30%;
-  max-height: 50%;
-  object-fit: cover;
-}
-
-#metadata {
-  margin-left: 3%;
-  max-width: 30%;
-}
-
-#hires {
-  max-width: 10%;
-  max-height: 10%;
-}
-
-#search {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
+.prog-wrapper {
+  display: flex;
+  justify-content: center;
 }
