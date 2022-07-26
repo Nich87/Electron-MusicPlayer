@@ -8,27 +8,28 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
+
 .art-wrapper {
   width: 50%;
-  height:50%;
-  padding-right:20%;
+  height: 50%;
+  padding-right: 20%;
 }
 
-.artwork  {
+.artwork {
   border-radius: 31px;
   background: #c4effd;
   box-shadow: 36px 36px 72px #91b1bb,
     -36px -36px 72px #f7ffff;
-    max-width: 100%;
-    height: auto;
-    width: auto;
+  max-width: 100%;
+  height: auto;
+  width: auto;
 }
 
 .metadata-wrapper {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin-top:13%;
+  margin-top: 13%;
 }
 
 .Controller-wrapper {
@@ -56,30 +57,6 @@ body::-webkit-scrollbar {
 .fa-solid:hover {
   transform: translateY(-3px);
   transform: scale(1.1);
-}
-
-.input-range[type="range"] {
-  appearance: none;
-  background-color: rgba(255, 255, 255, .7);
-  width: 30%;
-  border-radius: 6px;
-
-  &:focus,
-  &:active {
-    outline: none;
-  }
-
-  &::-webkit-slider-thumb {
-    appearance: none;
-    cursor: pointer;
-    position: relative;
-    width: 20px;
-    height: 20px;
-    display: block;
-    border: 1px solid #717171;
-    background-color: #fff;
-    border-radius: 50%;
-  }
 }
 
 .prog-wrapper {

@@ -1,5 +1,6 @@
 const pad = num => ('' + num).padStart(2, '0');
 function seconds_to_time(seconds) {
+    seconds = Math.trunc(seconds);
     const hours = Math.floor(seconds / 3600);
     seconds %= 3600;
     const minutes = Math.floor(seconds / 60);

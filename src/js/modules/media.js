@@ -48,10 +48,10 @@ export class MediaPlayer {
                 btn_playpause.classList.remove('fa-circle-play');
                 btn_playpause.classList.add('fa-circle-pause');
                 player_progress.max = this.current_song.duration() * 200;
-                duration_time_text.textContent = seconds_to_time(Math.trunc(this.current_song.duration()));
+                duration_time_text.textContent = seconds_to_time(this.current_song.duration());
                 setInterval(() => {
                     player_progress.value = this.current_time * 200;
-                    current_time_text.textContent = seconds_to_time(Math.trunc(this.current_time));
+                    current_time_text.textContent = seconds_to_time(this.current_time);
                 }, 16);
             },
             onpause: () => {
