@@ -1,11 +1,10 @@
-(async () => { // Wrap with a function to avoid global pollution
+(async () => {
     const { MediaPlayer } = await import('./modules/media.js');
     const { Queue } = await import('./modules/queue.js');
     const { Parser } = await import('./modules/parser.js');
     const {
         player_progress, btn_shuffle, btn_previous, btn_playpause, btn_skip, btn_repeat
     } = await import('./modules/elments.mjs');
-    M.AutoInit();
 
     let song,
     Player,
@@ -25,6 +24,7 @@
     btn_shuffle.addEventListener('click', () => queue.shuffle());
     btn_repeat.addEventListener('click', () => Player.loop_state());
     player_progress.addEventListener('input', () => Player.seek());
+    // volume.addEventListener('input', () => Player.volume());
 
 
     /*ipcRenderer.on('mysongs', () => {
@@ -61,15 +61,6 @@
                 });
             });
         });
-
-
-        volume.addEventListener('input', () => {
-            current_song.volume(volume.value / 100);
-            g_volume = volume.value / 100;
-        });
-
-
-
         async function meta_parse() {
             new Notification(metadata.common.title ?? '曲名が設定されていません', {
                 body: metadata.common.artist ?? 'Unknown',

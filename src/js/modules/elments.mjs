@@ -10,9 +10,12 @@ const btn_favorite = document.getElementById('button-favorite');
 const current_time_text = document.getElementById('current');
 const duration_time_text = document.getElementById('duration');
 
-const artwork = document.getElementsByClassName('artwork')[0]
+const artwork = document.getElementsByClassName('artwork')[0];
+const title = document.getElementById('title');
+const artist = document.getElementById('artist');
+const album = document.getElementById('album');
 
 export {
 player_progress,btn_shuffle,btn_previous,btn_playpause,btn_skip,btn_repeat,current_time_text,duration_time_text,
-artwork
+artwork,title,artist,album
 };
