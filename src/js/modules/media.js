@@ -2,14 +2,14 @@ const {
     player_progress,btn_shuffle, btn_playpause, btn_repeat, current_time_text, duration_time_text,
     artwork,title,artist,album
 } = await import('./elments.mjs');
-
+const { Notify } = await import('./connector.js');
 
 export class MediaPlayer {
     constructor(queue, current,parser) {
         this.current_song = current;
         this.queue = queue;
         this.parser = parser;
-        this.isLoop = false; //mode1
+        this.isLoop = false;
     }
 
     get current_time() {
@@ -40,7 +40,10 @@ export class MediaPlayer {
                 title.textContent = data.title
                 artist.textContent = data.artist;
                 album.textContent = data.album;
-                /* //TODO
+                const notify = new Notify(data);
+                notify.system();
+                notify.discord();
+                /* //TODO:
                 プレイリスト存在確認
                 キュー更新
                 */
@@ -97,7 +100,7 @@ export class MediaPlayer {
     }
 
     loop_state() {
-        //TODO:one loop
+        //TODO:単曲リピート実装
         this.isLoop = !this.isLoop;
         this.isLoop ? btn_repeat.style.color = 'green' : btn_repeat.style.color = 'silver';
     }
@@ -106,8 +109,8 @@ export class MediaPlayer {
         this.current_song.seek(player_progress.value /200);
     }
 
-    // volume() {
-    //     this.current_song?.volume(volume.value / 100);
-    //     // g_volume = volume.value / 100;
-    // }
+    volume(value) {
+        //this.current_song?.volume(value / 100);
+        // g_volume = value / 100;
+    }
 }

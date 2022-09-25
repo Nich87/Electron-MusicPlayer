@@ -5,7 +5,7 @@ if (require('electron-squirrel-startup')) app.quit();
 const config = require('./config.json');
 const path = require('path');
 const fs = require('fs');
-require("electron-reload")(__dirname, {
+if (config.debug) require("electron-reload")(__dirname, {
   electron: require(`${__dirname}/../node_modules/electron`)
 });
 /* ---------------------Module import-------------------------- */

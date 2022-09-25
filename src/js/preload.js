@@ -1,14 +1,23 @@
+//Electron
 const { ipcRenderer } = require('electron');
-const { Howl } = require('howler');
-const metadata = require('music-metadata');
 const storage = require('electron-json-storage');
-const { seconds_to_time } = require('../../Util/convert');
-const random = require('../../Util/random');
+const os = require('os');
+storage.setDataPath(os.homedir() + '/playlist/');
+
+//Discord lib
 const rpc = require('discord-rpc');
 const client = new rpc.Client({ transport: 'ipc' });
 client.login({ clientId: '952501026584416337' });
-const os = require('os');
-storage.setDataPath(os.homedir() + '/playlist/');
+
+//Audio lib
+const { Howl } = require('howler');
+const metadata = require('music-metadata');
+
+//etc Fns
+const { seconds_to_time } = require('../../Util/convert');
+const random = require('../../Util/random');
+
+//Global variables
 global.ipcRenderer = ipcRenderer;
 global.Howl = Howl;
 global.mm = metadata;

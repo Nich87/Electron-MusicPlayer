@@ -6,8 +6,9 @@
   "main": "src/index.js",
   "scripts": {
     "start": "chcp 65001 && electron-forge start",
-    "make": "npx electron-builder --win --x64 --dir",
-    "package": "npx electron-builder --win --x64"
+    "win": ".\\node_modules\\.bin\\electron-builder.cmd",
+    "linux": "npx electron-builder --linux --x64",
+    "save": "npm install --save"
   },
   "keywords": [
     "Electron",
@@ -29,15 +30,10 @@
     "electron-reload": "*",
     "electron-squirrel-startup": "^1.0.0",
     "howler": "^2.2.3",
-    "music-metadata": "^7.12.5"
+    "music-metadata": "^8.1.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.64",
-    "@electron-forge/maker-deb": "^6.0.0-beta.64",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.64",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.64",
-    "@electron-forge/maker-zip": "^6.0.0-beta.64",
-    "electron": "19.0.9",
-    "electron-builder": "^23.1.0"
+    "electron": "^20.2.0",
+    "electron-builder": "^23.3.3"
   }
 }

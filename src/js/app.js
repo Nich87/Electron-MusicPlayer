@@ -24,6 +24,8 @@
     btn_shuffle.addEventListener('click', () => queue.shuffle());
     btn_repeat.addEventListener('click', () => Player.loop_state());
     player_progress.addEventListener('input', () => Player.seek());
+
+    //TODO:ボリュームバー作成
     // volume.addEventListener('input', () => Player.volume());
 
 
@@ -61,33 +63,6 @@
                 });
             });
         });
-        async function meta_parse() {
-            new Notification(metadata.common.title ?? '曲名が設定されていません', {
-                body: metadata.common.artist ?? 'Unknown',
-                silent: true,
-                icon: imageUrl
-            });
-
-            client.request('SET_ACTIVITY', {
-                pid,
-                activity: {
-                    state: `${metadata.common.artist?.slice(0, 128) ?? 'Unknown'}`,
-                    details: `${metadata.common.title?.slice(0, 128) ?? '曲名が設定されていません'}`,
-                    assets: {
-                        large_image: 'f1c1ac57-07e7-4f99-8007-7dde646b551d',
-                        large_text: '再生中'
-                    },
-                    buttons: [
-                        { label: 'Download Electunes', url: 'https://github.com/Nich87/Electron-MusicPlayer' },
-                        { label: 'Developer', url: 'https://twitter.com/const_root' }
-                    ],
-                    timestamps: {
-                        start: Date.now()
-                    }
-                }
-            });
-        }
-
         function favorite_load() {
             storage.has(btoa(encodeURIComponent(current_song._src)), (err, isfavorite) => {
                 if (err) throw err;
