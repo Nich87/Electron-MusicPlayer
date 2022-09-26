@@ -59,6 +59,7 @@
     }
   },
   "dependencies": {
+    "@electron-forge/maker-dmg": "*",
     "about-window": "^1.15.2",
     "discord-rpc": "^4.0.1",
     "electron-json-storage": "^4.5.0",
@@ -69,7 +70,6 @@
   },
   "devDependencies": {
     "@electron-forge/cli": "6.0.0-beta.66",
-    "@electron-forge/maker-dmg": "6.0.0-beta.66",
     "@electron-forge/maker-deb": "6.0.0-beta.66",
     "@electron-forge/maker-rpm": "6.0.0-beta.66",
     "@electron-forge/maker-squirrel": "6.0.0-beta.66",
