@@ -1,8 +1,9 @@
 {
-  "name": "Electunes",
+  "name": "electunes",
   "version": "1.0.0-rc4",
   "description": "Simple MusicPlayer",
   "main": "src/index.js",
+  "private": true,
   "scripts": {
     "start": "chcp 65001 && electron-forge start",
     "build": "electron-forge make",
@@ -23,9 +24,7 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {
-        "executableName": "Electunes"
-      },
+      "packagerConfig": {},
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
