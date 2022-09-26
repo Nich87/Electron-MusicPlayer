@@ -1,6 +1,5 @@
 {
-  "name": "electron-musicplayer",
-  "productName": "Electunes",
+  "name": "Electunes",
   "version": "1.0.0-rc4",
   "description": "Simple MusicPlayer",
   "main": "src/index.js",
