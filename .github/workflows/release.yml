@@ -40,6 +40,11 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v3
 
+      - name: Flatten directory
+        run: |
+          mkdir release
+          find ./ -mindepth 2 -type f -exec mv -t ./release -n '{}' +
+
       - name: Display structure of downloaded files
         run: ls -R
 
@@ -48,4 +53,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          path: './**/*'
+          path: './release/*'
