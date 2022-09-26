@@ -11,7 +11,7 @@ client.login({ clientId: '952501026584416337' });
 
 //Audio lib
 const { Howl } = require('howler');
-const metadata = require('music-metadata-browser');
+const metadata = require('music-metadata');
 
 //etc Fns
 const { seconds_to_time } = require('../../Util/convert');

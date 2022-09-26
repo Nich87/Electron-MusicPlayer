@@ -1,6 +1,7 @@
 export class Parser {
     async metadata (path) {
-        const metadata = await mm.fetchFromUrl(path);
+        console.log(path);
+        const metadata = await mm.parseFile(path);
         const base64Data = metadata?.common.picture?.[0]?.data?.toString('base64');
         const imageUrl = base64Data ? 'data:image/png;base64,' + base64Data : '../Assets/no_image_square.jpg';
 
