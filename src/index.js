@@ -21,8 +21,9 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       preload: path.join(__dirname, './js/preload.js'),
-      contextIsolation: false
-    },
+      contextIsolation: false,
+      sandbox: false
+      },
     alwaysOnTop:true
   });
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
