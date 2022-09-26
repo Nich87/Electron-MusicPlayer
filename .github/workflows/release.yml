@@ -46,9 +46,6 @@ jobs:
           mkdir release
           find ./ -mindepth 2 -type f -exec mv -t ./release -n '{}' +
 
-      - name: Display structure of downloaded files
-        run: ls -R
-
       - name: Upload prebuild asset
         uses: icrawl/action-artifact@v2
         env:
