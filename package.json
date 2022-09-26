@@ -24,7 +24,9 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "executableName": "Electunes"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
