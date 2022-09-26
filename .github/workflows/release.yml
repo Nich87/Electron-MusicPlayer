@@ -27,9 +27,25 @@ jobs:
       - name: Package prebuild
         run: npm run build
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.os }}
+          path: out/make/
+
+  upload-assets:
+    name: Upload Assets
+    runs-on: ubuntu-22.04
+    needs: build
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
       - name: Upload prebuild asset
         uses: icrawl/action-artifact@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          path: 'out/make/**/*'
+          path: './**/*'
