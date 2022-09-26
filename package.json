@@ -6,8 +6,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "chcp 65001 && electron-forge start",
-    "win": ".\\node_modules\\.bin\\electron-builder.cmd",
-    "linux": "npx electron-builder --linux --x64",
+    "build": "electron-forge make",
     "save": "npm install --save"
   },
   "keywords": [
@@ -23,6 +22,33 @@
       "icon": "Assets/Electunes.ico"
     }
   },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "elect"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
   "dependencies": {
     "about-window": "^1.15.2",
     "discord-rpc": "^4.0.1",
@@ -34,6 +60,10 @@
   },
   "devDependencies": {
     "electron": "^20.2.0",
-    "electron-builder": "^23.3.3"
+    "@electron-forge/cli": "6.0.0-beta.66",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.66",
+    "@electron-forge/maker-zip": "6.0.0-beta.66",
+    "@electron-forge/maker-rpm": "6.0.0-beta.66",
+    "@electron-forge/maker-deb": "6.0.0-beta.66"
   }
 }
