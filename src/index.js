@@ -23,7 +23,7 @@ function createWindow() {
       preload: path.join(__dirname, './js/preload.js'),
       contextIsolation: false,
       sandbox: false
-      },
+    },
     alwaysOnTop:true
   });
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
