@@ -10,6 +10,7 @@ export class MediaPlayer {
         this.queue = queue;
         this.parser = parser;
         this.isLoop = false;
+        this.interval = null;
     }
 
     get current_time() {
@@ -48,13 +49,16 @@ export class MediaPlayer {
                 キュー更新
                 */
             },
-            onend: () => this.next_song(),
+            onend: () => {
+                clearInterval(this.interval);
+                this.next_song();
+            },
             onplay: () => {
                 btn_playpause.classList.remove('fa-circle-play');
                 btn_playpause.classList.add('fa-circle-pause');
                 player_progress.max = this.current_song.duration() * 200;
                 duration_time_text.textContent = seconds_to_time(this.current_song.duration());
-                setInterval(() => {
+                this.interval = setInterval(() => {
                     player_progress.value = this.current_time * 200;
                     current_time_text.textContent = seconds_to_time(this.current_time);
                 }, 16);
@@ -78,6 +82,8 @@ export class MediaPlayer {
     }
 
     next_song() {
+        this.stop();
+        this.isLoop ? this.queue.next() : this.queue.remove();
         if (this.queue.isEmpty) {
             artwork.src = '../Assets/Electunes.png';
             title.textContent = '';
@@ -88,8 +94,6 @@ export class MediaPlayer {
             btn_playpause.classList.add('fa-circle-play');
             return console.warn('returned');
         }
-        this.stop();
-        this.isLoop ? this.queue.next() : this.queue.remove();
         this.play();
     }
     previous_song() {

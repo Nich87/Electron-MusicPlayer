@@ -2,10 +2,9 @@
 const { app, BrowserWindow, Menu, dialog } = require('electron');
 const openAboutWindow = require('about-window').default;
 if (require('electron-squirrel-startup')) app.quit();
-const config = require('./config.json');
 const path = require('path');
 const fs = require('fs');
-if (config.debug) require("electron-reload")(__dirname, {
+if (app.isPackage) require("electron-reload")(__dirname, {
   electron: require(`${__dirname}/../node_modules/electron`)
 });
 /* ---------------------Module import-------------------------- */
@@ -27,7 +26,7 @@ function createWindow() {
     alwaysOnTop:true
   });
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
-  if (config.debug) mainWindow.webContents.openDevTools();
+  if (app.isPackage) mainWindow.webContents.openDevTools();
 }
 
 const openFolder = {
