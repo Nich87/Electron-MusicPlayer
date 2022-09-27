@@ -17,27 +17,26 @@
     "name": "Nich87"
   },
   "license": "MIT",
-  "build": {
-    "win": {
-      "icon": "Assets/Electunes.ico"
-    }
-  },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "Assets/Electunes"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
             "options": {
-              "iconUrl": "Assets/Electunes.ico",
-              "setupIcon": "Assets/Electunes.ico"
+              "iconUrl": "Assets/Electunes.png",
+              "setupIcon": "Assets/Electunes.png"
             }
           }
         },
         {
           "name": "@electron-forge/maker-dmg",
-          "config": {}
+          "config": {
+            "icon": "Assets/Electunes.icns"
+          }
         },
         {
           "name": "@electron-forge/maker-deb",
