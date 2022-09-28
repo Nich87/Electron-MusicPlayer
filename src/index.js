@@ -23,10 +23,12 @@ function createWindow() {
       contextIsolation: false,
       sandbox: false
     },
-    alwaysOnTop:true
+    alwaysOnTop:true,
+    icon: "Assets/Electunes.png"
   });
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
   if (!app.isPackaged) mainWindow.webContents.openDevTools();
+  
 }
 
 const openFolder = {
