@@ -18,44 +18,7 @@
   },
   "license": "MIT",
   "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "Assets/Electunes"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "options": {
-              "iconUrl": "Assets/Electunes.png",
-              "setupIcon": "Assets/Electunes.png"
-            }
-          }
-        },
-        {
-          "name": "@electron-forge/maker-dmg",
-          "config": {
-            "icon": "Assets/Electunes.icns"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {
-            "options": {
-              "icon": "Assets/Electunes.png"
-            }
-          }
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {
-            "options": {
-              "icon": "Assets/Electunes.png"
-            }
-          }
-        }
-      ]
-    }
+    "forge": "./forge.config.js"
   },
   "dependencies": {
     "about-window": "^1.15.2",
