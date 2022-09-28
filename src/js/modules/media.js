@@ -44,10 +44,7 @@ export class MediaPlayer {
                 const notify = new Notify(data);
                 notify.system();
                 notify.discord();
-                /* //TODO:
-                プレイリスト存在確認
-                キュー更新
-                */
+                //TODO:お気に入り機能実装時、お気に入りかをチェック
             },
             onend: () => {
                 clearInterval(this.interval);
@@ -79,21 +76,23 @@ export class MediaPlayer {
     stop() {
         this.current_song.stop();
         this.current_song.unload();
+        clearInterval(this.interval)
+    }
+
+    init() {
+        artwork.src = '../Assets/Electunes.png';
+        title.textContent = '';
+        artist.textContent = '';
+        album.textContent = '';
+        current_time_text.textContent = '00:00';
+        duration_time_text.textContent = '00:00';
+        btn_playpause.classList.add('fa-circle-play');
     }
 
     next_song() {
         this.stop();
         this.isLoop ? this.queue.next() : this.queue.remove();
-        if (this.queue.isEmpty) {
-            artwork.src = '../Assets/Electunes.png';
-            title.textContent = '';
-            artist.textContent = '';
-            album.textContent = '';
-            current_time_text.textContent = '00:00';
-            duration_time_text.textContent = '00:00';
-            btn_playpause.classList.add('fa-circle-play');
-            return console.warn('returned');
-        }
+        if (this.queue.isEmpty) return this.init();
         this.play();
     }
     previous_song() {

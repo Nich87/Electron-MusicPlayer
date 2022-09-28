@@ -13,7 +13,13 @@
 
     ipcRenderer.on('start', async (_args, filelist) => {
         queue.items = filelist;
-        Player = new MediaPlayer(queue, song, parser);
+        if(Player?.isPlaying){
+            Player.stop();
+            Player = null;
+            Player = new MediaPlayer(queue,song,parser);
+            Player.init();
+        }
+        else Player = new MediaPlayer(queue, song, parser);
         Player.play();
     });
 
