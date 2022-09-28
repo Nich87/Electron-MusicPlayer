@@ -1,6 +1,6 @@
 const {
     player_progress,btn_shuffle, btn_playpause, btn_repeat, current_time_text, duration_time_text,
-    artwork,title,artist,album
+    artwork,title,artist,album,song_title
 } = await import('./elments.mjs');
 const { Notify } = await import('./connector.js');
 
@@ -38,6 +38,7 @@ export class MediaPlayer {
             onload: async() => {
                 const data = await this.metadata;
                 artwork.src = data.image;
+                song_title.textContent = data.title;
                 title.textContent = data.title
                 artist.textContent = data.artist;
                 album.textContent = data.album;

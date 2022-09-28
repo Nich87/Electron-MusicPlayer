@@ -15,7 +15,9 @@ const title = document.getElementById('title');
 const artist = document.getElementById('artist');
 const album = document.getElementById('album');
 
+const song_title = document.getElementById('song-title');
+
 export {
 player_progress,btn_shuffle,btn_previous,btn_playpause,btn_skip,btn_repeat,current_time_text,duration_time_text,
-artwork,title,artist,album
+artwork,title,artist,album,song_title
 };
