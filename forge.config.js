@@ -12,8 +12,8 @@ module.exports = {
        * @type {import("@electron-forge/maker-squirrel").MakerSquirrelConfig}
        */
       config: {
-        iconUrl: "Assets/Electunes.ico",
-        setupIcon: "Assets/Electunes.ico"
+        iconUrl: "./Assets/Electunes.ico",
+        setupIcon: "./Assets/Electunes.ico"
       }
     },
     {
