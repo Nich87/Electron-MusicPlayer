@@ -82,6 +82,8 @@ export class MediaPlayer {
 
     init() {
         artwork.src = '../Assets/Electunes.png';
+        player_progress.value = 0;
+        song_title.textContent = 'Electunes';
         title.textContent = '';
         artist.textContent = '';
         album.textContent = '';
