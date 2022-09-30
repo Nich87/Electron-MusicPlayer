@@ -99,7 +99,7 @@ export class MediaPlayer {
         this.play();
     }
     previous_song() {
-        if (this.queue.isEmpty) return console.warn('returned');
+        if (this.queue.isEmpty) return this.init();
         this.stop();
         this.queue.previous();
         this.play();
