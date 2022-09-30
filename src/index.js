@@ -2,51 +2,95 @@
 const { app, BrowserWindow, Menu, dialog } = require('electron');
 const openAboutWindow = require('about-window').default;
 if (require('electron-squirrel-startup')) app.quit();
-const config = require('./config.json');
 const path = require('path');
 const fs = require('fs');
+if (!app.isPackaged) require("electron-reload")(__dirname, {
+  electron: require(`${__dirname}/../node_modules/electron`)
+});
 /* ---------------------Module import-------------------------- */
 
 /* ---------------------  Initialize   -------------------------*/
+const exts = ['mp3', 'wav', 'flac', 'ogg', 'aac', 'm4a', 'wma', 'alac', 'webm']
 let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1400,
-    height: 1080,
+    minWidth: 800,
+    minHeight: 600,
     webPreferences: {
       nodeIntegration: false,
       preload: path.join(__dirname, './js/preload.js'),
-      contextIsolation: false
-    }
+      contextIsolation: false,
+      sandbox: false
+    },
+    alwaysOnTop: true,
+    icon: "Assets/Electunes.png"
   });
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
-  if (config.debug) mainWindow.webContents.openDevTools();
+  if (!app.isPackaged) mainWindow.webContents.openDevTools();
 }
 
 const openFolder = {
-  label: 'Open Folder',
-  click: openFolderDialog
+  label: 'File',
+  submenu: [
+    {
+      label: 'フォルダを開く',
+      click: openFolderDialog
+    }
+  ]
 };
 
 const information = {
   label: 'Information',
-  click: aboutApplication
+  submenu: [
+    {
+      label: 'このアプリについて',
+      click: aboutApplication
+    }, {
+      label: '開発に参加する'
+    }
+  ]
 };
 
 const openSearch = {
   label: 'Search',
-  click: openSearchDialog
+  submenu: [
+    {
+      label: '曲名で探す'
+    }, {
+      label: 'アーティスト名で探す'
+    }, {
+      label: 'アルバム名で探す'
+    }
+  ]
+  //click: openSearchDialog
 };
 
 const switchTheme = {
   label: 'Theme',
-  click: changeTheme
+  submenu: [
+    {
+      label: 'ライトテーマ',
+      click: changeTheme
+    }, {
+      label: 'ダークテーマ',
+      click: changeTheme
+    }, {
+      label: 'Discordテーマ',
+      click: changeTheme
+    }
+  ]
 };
 
+//TODO:プレイリストフォルダの数に応じて項目を増やす
 const mySong = {
-  label: 'My Songs',
-  click: playMySongs
+  label: 'Playlist',
+  submenu: [
+    {
+      label: 'いいねした曲', //default playlist
+      click: playMySongs //ex. playMySongs(classic-playlist)
+    }
+  ]
 };
 /* ---------------------  Initialize  ------------------------- */
 
@@ -57,9 +101,9 @@ app.on('ready', () => {
   SetMenu();
 })
 
-.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
-});
+  .on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
 
 /* ---------------------Event listeners------------------------ */
 
@@ -92,17 +136,8 @@ function walkSync(dir, filelist = []) {
   files.forEach((file) => {
     const filepath = path.join(dir, file);
     if (fs.statSync(filepath).isDirectory()) return walkSync(filepath, filelist);
-    if (
-      file.endsWith('.mp3') ||
-      file.endsWith('.wav') ||
-      file.endsWith('.flac') ||
-      file.endsWith('.ogg') ||
-      file.endsWith('.aac') ||
-      file.endsWith('.m4a') ||
-      file.endsWith('.wma') ||
-      file.endsWith('.alac') ||
-      file.endsWith('.webm')
-    ) filelist.push(filepath);
+    const ext = file.slice(file.lastIndexOf('.') + 1);
+    if (exts.includes(ext)) filelist.push(filepath);
   });
   return filelist;
 }

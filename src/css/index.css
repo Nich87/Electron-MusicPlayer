@@ -1,78 +1,83 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
 body {
   background-color: #ffffff;
   -webkit-user-select: none;
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans JP";
+  display: flex;
+  flex-direction: column;
 }
 
-#player .controler {
-  position: absolute;
-  bottom: 2%;
-  left: 50%;
-  transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
+body::-webkit-scrollbar {
+  display: none;
 }
 
-#player .sub-controler {
-  position: absolute;
-  right: 5%;
-  bottom: 2%;
-}
-
-#player #volume {
-  position: absolute;
-  bottom: 2%;
-  left: 5%;
-  width: 15%;
-}
-
-#progress-wrapper #player-progress {
-  position: absolute;
-  bottom: 5%;
-  width: 100%;
-}
-
-#progress-wrapper #current {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
-#progress-wrapper #duration {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
-
-#music-list {
-  position: absolute;
-  right: 0;
-  top: 0;
-  max-height: 92%;
+.art-wrapper {
   width: 30%;
-  overflow: auto;
+  height: 30%;
+  margin-bottom: auto;
 }
 
-#artwork {
-  margin-top: 3%;
-  margin-left: 3%;
-  max-width: 30%;
-  max-height: 50%;
-  object-fit: cover;
+.artwork {
+  border-radius: 30px;
+  background: #c4effd;
+  box-shadow: 36px 36px 72px #91b1bb,
+    -36px -36px 72px #f7ffff;
+  max-width: 100%;
+  height: auto;
+  width: auto;
 }
 
-#metadata {
-  margin-left: 3%;
-  max-width: 30%;
+.meta * {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
-#hires {
-  max-width: 10%;
-  max-height: 10%;
+.metadata-wrapper {
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
-#search {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
+.Controller-wrapper {
+  background: #c4effd;
+  width: 100%;
+  height: 13%;
+  box-shadow: 35px 35px 53px #91b1bb,
+    -35px -35px 53px #f7ffff;
+  margin-top: auto;
+}
+
+.controler {
+  display: flex;
+  justify-content: center;
+}
+
+.fa-solid {
+  margin: 1%;
+  transition-duration: .2s;
+}
+
+.fa-solid:hover {
+  transform: translateY(-3px);
+  transform: scale(1.1);
+}
+
+.prog-wrapper {
+  display: flex;
+  justify-content: center;
 }

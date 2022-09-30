@@ -1,13 +1,13 @@
 {
-  "name": "electron-musicplayer",
-  "productName": "Electunes",
-  "version": "1.0.0-rc3",
+  "name": "electunes",
+  "version": "1.0.0-rc4",
   "description": "Simple MusicPlayer",
   "main": "src/index.js",
+  "private": true,
   "scripts": {
     "start": "chcp 65001 && electron-forge start",
-    "make": "npx electron-builder --win --x64 --dir",
-    "package": "npx electron-builder --win --x64"
+    "build": "electron-forge make",
+    "save": "npm install --save"
   },
   "keywords": [
     "Electron",
@@ -17,26 +17,24 @@
     "name": "Nich87"
   },
   "license": "MIT",
-  "build": {
-    "win": {
-      "icon": "Assets/Electunes.ico"
-    }
+  "config": {
+    "forge": "./forge.config.js"
   },
   "dependencies": {
     "about-window": "^1.15.2",
     "discord-rpc": "^4.0.1",
     "electron-json-storage": "^4.5.0",
+    "electron-reload": "*",
     "electron-squirrel-startup": "^1.0.0",
     "howler": "^2.2.3",
-    "music-metadata": "^7.12.2"
+    "music-metadata-browser": "^2.5.9"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.63",
-    "@electron-forge/maker-deb": "^6.0.0-beta.63",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
-    "@electron-forge/maker-zip": "^6.0.0-beta.63",
-    "electron": "17.0.0",
-    "electron-builder": "^22.14.5"
+    "@electron-forge/cli": "6.0.0-beta.66",
+    "@electron-forge/maker-deb": "6.0.0-beta.66",
+    "@electron-forge/maker-dmg": "6.0.0-beta.66",
+    "@electron-forge/maker-rpm": "6.0.0-beta.66",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.66",
+    "electron": "^20.2.0"
   }
 }
