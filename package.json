@@ -7,6 +7,7 @@
   "scripts": {
     "start": "chcp 65001 && electron-forge start",
     "build": "electron-forge make",
+    "build:mac": "electron-forge make --arch=universal",
     "save": "npm install --save"
   },
   "keywords": [
